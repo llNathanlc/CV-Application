@@ -1,0 +1,22 @@
+.add-InformationGrid{
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.input-Information{
+    border:none;
+    color:rgb(155, 155, 155);
+    font-size: 14px;
+}
+.nameSection{   
+    font-size: 16px;
+    font-weight: bolder;
+    color:rgb(81, 81, 81);
+}
+.cursiveText-Information{
+    font-style: italic;
+}
+.rightSideInput-Information{
+    text-align: right;
+}
