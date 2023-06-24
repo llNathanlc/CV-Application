@@ -52,20 +52,22 @@ export default function Education() {
 
   return (
     <div id="education">
-      <h3 className="sectionTitle"> EDUCATION </h3>
-      <div className="informationContainer">
-        {educationList.map(({ id, key, education }) => (
-          <div key={key} id={key}>
-            {education}
-            <button
-              type="button"
-              onClick={() => handleDelete(id)}
-              className="printVisibility"
-            >
-              delete
-            </button>
-          </div>
-        ))}
+      <div>
+        <h3 className="sectionTitle"> EDUCATION </h3>
+        <div className="informationContainer">
+          {educationList.map(({ id, key, education }) => (
+            <div key={key} id={key} >
+               <button
+                type="button"
+                onClick={() => handleDelete(id)}
+                className="printVisibility deleteSectionButton"
+              >
+                -
+              </button>
+              {education}
+            </div>
+          ))}
+        </div>
       </div>
       {showButton && (
         <BackdropLayout type="add">

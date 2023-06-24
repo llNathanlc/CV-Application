@@ -33,6 +33,9 @@ export default function BulletPoints({ bulletPoints = [], onChange }) {
 
   return (
     <>
+    <button type="button" className="printVisibility addBulletPointButton" onClick={handleAdd}>
+        Add bulletpoint
+      </button>
       <ul>
         {newBulletPoints.map(({ id, key, bulletPoint }) => (
           <li key={key}>
@@ -40,7 +43,7 @@ export default function BulletPoints({ bulletPoints = [], onChange }) {
               <input
                 type="text"
                 className="inputBulletPoint"
-                style={{ width: (bulletPoint.length + 1) * 7 }}
+                style={{ width: `${(bulletPoint.length ) * 7}px` }}
                 name={id}
                 key={key}
                 value={bulletPoint}
@@ -52,17 +55,14 @@ export default function BulletPoints({ bulletPoints = [], onChange }) {
             </label>
             <button
               type="button"
-              className="printVisibility"
+              className="printVisibility removeBulletPointButton"
               onClick={() => handleDelete(id)}
             >
-              delete
+              -
             </button>
           </li>
         ))}
       </ul>
-      <button type="button" className="printVisibility" onClick={handleAdd}>
-        add
-      </button>
     </>
   );
 }

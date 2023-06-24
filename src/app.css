@@ -27,8 +27,6 @@ html,body,input,button{
   padding: 2rem 4rem 2rem 4rem;
 }
 button {
-  display: none;
-  position:absolute;
   border: none;
   background-color: rgb(174, 147, 147);
   color:rgb(255, 255, 255);

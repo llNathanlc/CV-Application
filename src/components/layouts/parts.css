@@ -4,10 +4,42 @@
   border-bottom: solid 1px black;
 }
 
-.informationContainer{
-    display: flex;
-    flex-direction: column;
-    gap:1rem;
+.informationContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.editButton {
+  position: absolute;
+  justify-self: center;
+  align-self: right;
+}
+.addButton {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.deleteSectionButton {
+    position: absolute;
+}
+.removeBulletPointButton{
+  position: absolute;
+}
+.addBulletPointButton {
+  position: absolute;
+  background-color: rgb(240, 205, 205);
+  right: 73%;
+  transform: translate(0, -126%);
+}
+.addBulletPointButton:hover {
+  background-color: rgb(219, 80, 80);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 /* Information */
@@ -24,14 +56,6 @@
   font-size: 14px;
   color: grey;
 }
-.editButton {
-    position:absolute;
-  right: 25%;
-}
-.addButton{
-    position:absolute;
-    right:50%;
-}
 .informationDiv {
   display: flex;
 }
@@ -43,9 +67,8 @@
 }
 
 /* Skills */
-.skillsContainer{
-    display: flex;
-    flex-direction: column;
-    gap:0.2rem;
+.skillsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
-

@@ -40,67 +40,60 @@ export default function AddInformation({
 
   return (
     <>
-      <div>
-        <div className="add-InformationGrid">
-          <label htmlFor="name">
-            <input
-              className="input-Information nameSection"
-              type="text"
-              name="name"
-              value={newName}
-              style={{ width: (newName.length + 1) * 8 }}
-              onChange={(e) => {
-                changeWidthDinamically(e);
-                setNewName(e.target.value);
-              }}
-            />
-          </label>
-          <label htmlFor="date" style={{ justifySelf: "end" }}>
-            <input
-              className="input-Information cursiveText-Information rightSideInput-Information"
-              type="text"
-              name="date"
-              style={{ width: (newDate.length + 1) * 8 }}
-              value={newDate}
-              onChange={(e) => {
-                changeWidthDinamically(e);
-                setNewDate(e.target.value);
-              }}
-            />
-          </label>
-          <label htmlFor="information">
-            <input
-              className="input-Information cursiveText-Information"
-              type="text"
-              name="information"
-              style={{ width: (newInformation.length + 1) * 8 }}
-              value={newInformation}
-              onChange={(e) => {
-                changeWidthDinamically(e);
-                setNewInformation(e.target.value);
-              }}
-            />
-          </label>
-          <label htmlFor="place" style={{ justifySelf: "end" }}>
-            <input
-              className="input-Information rightSideInput-Information"
-              type="text"
-              name="place"
-              style={{ width: (newPlace.length + 1) * 8 }}
-              value={newPlace}
-              onChange={(e) => {
-                changeWidthDinamically(e);
-                setNewPlace(e.target.value);
-              }}
-            />
-          </label>
-          </div>
-          <BulletPoints
-            bulletPoints={newBulletPoints}
-            onChange={(e) => changeBulletPoints(e)}
+      <div className="add-InformationGrid">
+        <label htmlFor="name">
+          <input
+            className="input-Information nameSection"
+            type="text"
+            name="name"
+            value={newName}
+            style={{ width: (newName.length + 1) * 8 }}
+            onChange={(e) => {
+              changeWidthDinamically(e);
+              setNewName(e.target.value);
+            }}
           />
-      </div>
-      {showButton && (
+        </label>
+        <label htmlFor="date" style={{ justifySelf: "end" }}>
+          <input
+            className="input-Information cursiveText-Information rightSideInput-Information"
+            type="text"
+            name="date"
+            style={{ width: (newDate.length + 1) * 8 }}
+            value={newDate}
+            onChange={(e) => {
+              changeWidthDinamically(e);
+              setNewDate(e.target.value);
+            }}
+          />
+        </label>
+        <label htmlFor="information">
+          <input
+            className="input-Information cursiveText-Information"
+            type="text"
+            name="information"
+            style={{ width: (newInformation.length + 1) * 8 }}
+            value={newInformation}
+            onChange={(e) => {
+              changeWidthDinamically(e);
+              setNewInformation(e.target.value);
+            }}
+          />
+        </label>
+        <label htmlFor="place" style={{ justifySelf: "end" }}>
+          <input
+            className="input-Information rightSideInput-Information"
+            type="text"
+            name="place"
+            style={{ width: (newPlace.length + 1) * 8 }}
+            value={newPlace}
+            onChange={(e) => {
+              changeWidthDinamically(e);
+              setNewPlace(e.target.value);
+            }}
+          />
+        </label>
+        {showButton && (
         <BackdropLayout type="edit">
           <Card>
             <EditForm
@@ -118,6 +111,11 @@ export default function AddInformation({
           </Card>
         </BackdropLayout>
       )}
+      </div>
+      <BulletPoints
+        bulletPoints={newBulletPoints}
+        onChange={(e) => changeBulletPoints(e)}
+      />
     </>
   );
 }

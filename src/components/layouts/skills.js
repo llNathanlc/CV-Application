@@ -61,20 +61,22 @@ export default function Skills() {
   }
   return (
     <div id="skills">
-      <h3 className="sectionTitle">SKILLS</h3>
-      <div className="skillsContainer">
-        {skillsList.map(({ id, key, skill }) => (
-          <div key={key} id={key}>
-            {skill}
-            <button
-              type="button"
-              onClick={() => handleDelete(id)}
-              className="printVisibility"
-            >
-              delete
-            </button>
-          </div>
-        ))}
+      <div>
+        <h3 className="sectionTitle">SKILLS</h3>
+        <div className="skillsContainer">
+          {skillsList.map(({ id, key, skill }) => (
+            <div key={key} id={key}>
+              <button
+                type="button"
+                onClick={() => handleDelete(id)}
+                className="printVisibility deleteSectionButton"
+              >
+                -
+              </button>
+              {skill}
+            </div>
+          ))}
+        </div>
       </div>
       {showButton && (
         <BackdropLayout type="add">

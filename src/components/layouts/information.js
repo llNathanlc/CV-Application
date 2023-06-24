@@ -52,6 +52,24 @@ function Information() {
             setName(e.target.value);
           }}
         />
+        {showButton && (
+        <BackdropLayout type="edit">
+          <Card>
+            <InformationForm
+              changeName={(e) => changeName(e)}
+              name={name}
+              changeTlfNumber={(e) => changeTlfNumber(e)}
+              tlfNumber={tlfNumber}
+              changeEmail={(e) => changeEmail(e)}
+              email={email}
+              changeLinkedin={(e) => changeLinkedin(e)}
+              linkedin={linkedin}
+              changeGithub={(e) => changeGithub(e)}
+              github={github}
+            />
+          </Card>
+        </BackdropLayout>
+      )}
       </label>
       <div className="informationDiv">
         <label htmlFor="tlfNumber">
@@ -110,24 +128,6 @@ function Information() {
           />
         </label>
       </div>
-      {showButton && (
-        <BackdropLayout type="edit">
-          <Card>
-            <InformationForm
-              changeName={(e) => changeName(e)}
-              name={name}
-              changeTlfNumber={(e) => changeTlfNumber(e)}
-              tlfNumber={tlfNumber}
-              changeEmail={(e) => changeEmail(e)}
-              email={email}
-              changeLinkedin={(e) => changeLinkedin(e)}
-              linkedin={linkedin}
-              changeGithub={(e) => changeGithub(e)}
-              github={github}
-            />
-          </Card>
-        </BackdropLayout>
-      )}
     </div>
   );
 }

@@ -105,28 +105,30 @@ function Projects() {
 
   return (
     <div id="project">
-      <h3 className="sectionTitle">PROJECTS</h3>
-      <div className="informationContainer">
-        {projectList.map(({ id, key, project }) => (
-          <div key={key} id={key}>
-            {project}
-            <button
-              type="button"
-              onClick={() => handleDelete(id)}
-              className="printVisibility"
-            >
-              delete
-            </button>
-          </div>
-        ))}
+      <div>
+        <h3 className="sectionTitle">PROJECTS</h3>
+        <div className="informationContainer">
+          {projectList.map(({ id, key, project }) => (
+            <div key={key} id={key}>
+              <button
+                type="button"
+                onClick={() => handleDelete(id)}
+                className="printVisibility deleteSectionButton"
+              >
+                -
+              </button>
+              {project}
+            </div>
+          ))}
+        </div>
       </div>
-      {showButton && (
-        <BackdropLayout type="add">
-          <Card>
-            <AddForm addNewInformation={(e) => addNewProject(e)} />
-          </Card>
-        </BackdropLayout>
-      )}
+        {showButton && (
+          <BackdropLayout type="add">
+            <Card>
+              <AddForm addNewInformation={(e) => addNewProject(e)} />
+            </Card>
+          </BackdropLayout>
+        )}
     </div>
   );
 }

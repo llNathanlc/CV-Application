@@ -31,7 +31,7 @@ module.exports = {
       {
         test: /\.(ttf|eot|woff|woff2)$/,
         type: "asset/resource",
-      };
+      },
       {
         test: /\.js$/i,
         exclude: /node_modules/,

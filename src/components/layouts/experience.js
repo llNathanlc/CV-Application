@@ -96,20 +96,22 @@ function Experience() {
 
   return (
     <div id="experience">
-      <h3 className="sectionTitle">EXPERIENCE</h3>
-      <div className="informationContainer">
-        {experienceList.map(({ id, key, experience }) => (
-          <div key={key} id={key}>
-            {experience}
-            <button
-              type="button"
-              onClick={() => handleDelete(id)}
-              className="printVisibility"
-            >
-              delete
-            </button>
-          </div>
-        ))}
+      <div>
+        <h3 className="sectionTitle">EXPERIENCE</h3>
+        <div className="informationContainer">
+          {experienceList.map(({ id, key, experience }) => (
+            <div key={key} id={key}>
+               <button
+                type="button"
+                onClick={() => handleDelete(id)}
+                className="printVisibility deleteSectionButton"
+              >
+                -
+              </button>
+              {experience}
+            </div>
+          ))}
+        </div>
       </div>
       {showButton && (
         <BackdropLayout type="add">
