@@ -109,7 +109,7 @@ function Projects() {
         <h3 className="sectionTitle">PROJECTS</h3>
         <div className="informationContainer">
           {projectList.map(({ id, key, project }) => (
-            <div key={key} id={key}>
+            <div key={key} id={key} className="section">
               <button
                 type="button"
                 onClick={() => handleDelete(id)}

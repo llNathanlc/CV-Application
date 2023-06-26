@@ -98,9 +98,9 @@ function Experience() {
     <div id="experience">
       <div>
         <h3 className="sectionTitle">EXPERIENCE</h3>
-        <div className="informationContainer">
+        <div className="informationContainer" >
           {experienceList.map(({ id, key, experience }) => (
-            <div key={key} id={key}>
+            <div key={key} id={key} className="section">
                <button
                 type="button"
                 onClick={() => handleDelete(id)}

@@ -19,6 +19,8 @@ export default function AddInformation({
   const [newPlace, setNewPlace] = useState(place);
   const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
 
+  const [visibility, setVisibility] = useState("hidden");
+
   function changeName(newNameAdd) {
     setNewName(newNameAdd);
   }
@@ -36,10 +38,21 @@ export default function AddInformation({
     setNewBulletPoints(newBulletPointsAdd);
   }
 
-  const [showButton, setShowButton] = useState(true);
+  const [showButton, setShowButton] = useState(false);
+
+  function onMouseEnter() {
+    setVisibility("visible");
+  }
+  function onMouseLeave() {
+    setVisibility("hidden");
+  }
 
   return (
-    <>
+    <div
+      className="gridContainer"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <div className="add-InformationGrid">
         <label htmlFor="name">
           <input
@@ -93,8 +106,8 @@ export default function AddInformation({
             }}
           />
         </label>
-        {showButton && (
-        <BackdropLayout type="edit">
+        <BackdropLayout type="edit" buttonVisibility={visibility}>
+          {" "}
           <Card>
             <EditForm
               name={newName}
@@ -110,12 +123,12 @@ export default function AddInformation({
             />
           </Card>
         </BackdropLayout>
-      )}
       </div>
       <BulletPoints
         bulletPoints={newBulletPoints}
         onChange={(e) => changeBulletPoints(e)}
+        visibility={visibility}
       />
-    </>
+    </div>
   );
 }

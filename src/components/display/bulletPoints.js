@@ -4,8 +4,17 @@ import "./bulletPoints.css";
 
 let count = 2;
 
-export default function BulletPoints({ bulletPoints = [], onChange }) {
+export default function BulletPoints({
+  bulletPoints = [],
+  onChange,
+  visibility,
+  changeVisibility,
+}) {
   const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
+
+  const [newVisibility, setNewVisibility] = useState(visibility);
+
+  
 
   function handleDelete(id) {
     setNewBulletPoints(newBulletPoints.filter((bullet) => bullet.id !== id));
@@ -33,9 +42,6 @@ export default function BulletPoints({ bulletPoints = [], onChange }) {
 
   return (
     <>
-    <button type="button" className="printVisibility addBulletPointButton" onClick={handleAdd}>
-        Add bulletpoint
-      </button>
       <ul>
         {newBulletPoints.map(({ id, key, bulletPoint }) => (
           <li key={key}>
@@ -43,7 +49,7 @@ export default function BulletPoints({ bulletPoints = [], onChange }) {
               <input
                 type="text"
                 className="inputBulletPoint"
-                style={{ width: `${(bulletPoint.length ) * 7}px` }}
+                style={{ width: `${bulletPoint.length * 7}px` }}
                 name={id}
                 key={key}
                 value={bulletPoint}
@@ -63,6 +69,14 @@ export default function BulletPoints({ bulletPoints = [], onChange }) {
           </li>
         ))}
       </ul>
+      <button
+        type="button"
+        className="printVisibility addBulletPointButton"
+        onClick={handleAdd}
+        style={{ visibility: `${visibility}` }}
+      >
+        Add bulletpoint
+      </button>
     </>
   );
 }

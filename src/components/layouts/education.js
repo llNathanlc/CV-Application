@@ -38,6 +38,10 @@ export default function Education() {
 
   const [educationList, setEducationList] = useState(example);
 
+  const [visibilityAddButton, setVisibilityAddButton] = useState("hidden")
+
+  const [visibilityRemoveButton, setVisibilityRemoveButton] = useState("hidden")
+
   function handleDelete(id) {
     setEducationList(educationList.filter((ed) => ed.id !== id));
   }
@@ -50,15 +54,30 @@ export default function Education() {
     setEducationList(newList);
   }
 
+  function onMouseEnterEducation() {
+    setVisibilityAddButton("visible");
+  }
+  function onMouseLeaveEducation() {
+    setVisibilityAddButton("hidden");
+  }
+  function onMouseEnterSection() {
+    setVisibilityRemoveButton("visible");
+  }
+  function onMouseLeaveSection() {
+    setVisibilityRemoveButton("hidden");
+  }
+
+
   return (
-    <div id="education">
+    <div id="education" onMouseEnter={onMouseEnterEducation} onMouseLeave={onMouseLeaveEducation}>
       <div>
         <h3 className="sectionTitle"> EDUCATION </h3>
         <div className="informationContainer">
           {educationList.map(({ id, key, education }) => (
-            <div key={key} id={key} >
+            <div key={key} id={key} className="section" onMouseEnter={onMouseEnterSection} onMouseLeave={onMouseLeaveSection}>
                <button
                 type="button"
+                style={{visibility:`${visibilityRemoveButton}`}}
                 onClick={() => handleDelete(id)}
                 className="printVisibility deleteSectionButton"
               >
@@ -70,7 +89,7 @@ export default function Education() {
         </div>
       </div>
       {showButton && (
-        <BackdropLayout type="add">
+        <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
           <Card>
             <AddForm addNewInformation={(e) => addNewEducation(e)} />
           </Card>

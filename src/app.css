@@ -58,4 +58,10 @@ ul{
     display: none;
     visibility: hidden !important;
   }
+  .section{
+    margin:0;
+  }
+  .informationContainer{
+    gap:1rem;
+  }
 }

@@ -65,7 +65,7 @@ export default function Skills() {
         <h3 className="sectionTitle">SKILLS</h3>
         <div className="skillsContainer">
           {skillsList.map(({ id, key, skill }) => (
-            <div key={key} id={key}>
+            <div key={key} id={key} className="section">
               <button
                 type="button"
                 onClick={() => handleDelete(id)}
