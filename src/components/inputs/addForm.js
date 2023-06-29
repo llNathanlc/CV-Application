@@ -7,7 +7,7 @@ export default function AddForm({ addNewInformation }) {
   const [date, setDate] = useState("");
   const [information, setInformation] = useState("");
   const [place, setPlace] = useState("");
-
+  const [bulletPoints, setBulletPoints] = useState([]);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -18,6 +18,7 @@ export default function AddForm({ addNewInformation }) {
         date={date}
         information={information}
         place={place}
+        bulletPoints={bulletPoints}
       />
     );
   }
@@ -29,6 +30,7 @@ export default function AddForm({ addNewInformation }) {
           name="name"
           type="text"
           value={name}
+          placeholder="name"
           onChange={(e) => setName(e.target.value)}
         />
       </label>
@@ -38,6 +40,7 @@ export default function AddForm({ addNewInformation }) {
           name="date"
           type="text"
           value={date}
+          placeholder="date"
           onChange={(e) => setDate(e.target.value)}
         />
       </label>
@@ -47,6 +50,7 @@ export default function AddForm({ addNewInformation }) {
           name="information"
           type="text"
           value={information}
+          placeholder="information"
           onChange={(e) => setInformation(e.target.value)}
         />
       </label>
@@ -56,11 +60,14 @@ export default function AddForm({ addNewInformation }) {
           name="place"
           type="text"
           value={place}
+          placeholder="place"
           onChange={(e) => setPlace(e.target.value)}
         />
       </label>
-      <BulletPoints />
-      <button type="submit" className="printVisibility">add</button>
+      <BulletPoints bulletPoints={bulletPoints} />
+      <button type="submit" className="printVisibility">
+        add
+      </button>
     </form>
   );
 }

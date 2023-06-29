@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import InformationForm from "../inputs/informationForm";
-import changeWidthDinamically from "../utils/functions"
+import changeWidthDinamically from "../utils/functions";
 
 function Information() {
   const [name, setName] = useState("Jake Ryan");
@@ -11,14 +11,13 @@ function Information() {
   const [linkedin, setLinkedin] = useState("linkedin.com/in/jake");
   const [github, setGithub] = useState("github.com/jake");
 
-  const [showButton, setShowButton] = useState(false);
+  const [visibility, setVisibility] = useState("hidden");
 
   function onMouseEnter() {
-    setShowButton(true);
+    setVisibility("visible");
   }
-
-  function onMouseLeave(){
-    setShowButton(false);
+  function onMouseLeave() {
+    setVisibility("hidden");
   }
 
   function changeName(newName) {
@@ -37,23 +36,25 @@ function Information() {
     setGithub(newGithub);
   }
 
-
   return (
-    <div id="Information" onMouseEnter={onMouseEnter}>
+    <div
+      id="Information"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <label htmlFor="name">
         <input
           name="name"
           className="informationName"
           type="text"
           value={name}
-          style={{ width: (name.length + 1) * 20}}
+          style={{ width: (name.length + 1) * 20 }}
           onChange={(e) => {
             changeWidthDinamically(e);
             setName(e.target.value);
           }}
         />
-        {showButton && (
-        <BackdropLayout type="edit">
+        <BackdropLayout type="edit" buttonVisibility={visibility}>
           <Card>
             <InformationForm
               changeName={(e) => changeName(e)}
@@ -69,7 +70,6 @@ function Information() {
             />
           </Card>
         </BackdropLayout>
-      )}
       </label>
       <div className="informationDiv">
         <label htmlFor="tlfNumber">

@@ -3,6 +3,7 @@ import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const example = [
   {
@@ -34,13 +35,11 @@ const example = [
 let counter = 1;
 
 export default function Education() {
-  const [showButton, setShowButton] = useState(true);
-
   const [educationList, setEducationList] = useState(example);
 
-  const [visibilityAddButton, setVisibilityAddButton] = useState("hidden")
+  const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
-  const [visibilityRemoveButton, setVisibilityRemoveButton] = useState("hidden")
+  const [hoveredElement, setHoveredElement] = useState(null);
 
   function handleDelete(id) {
     setEducationList(educationList.filter((ed) => ed.id !== id));
@@ -60,41 +59,86 @@ export default function Education() {
   function onMouseLeaveEducation() {
     setVisibilityAddButton("hidden");
   }
-  function onMouseEnterSection() {
-    setVisibilityRemoveButton("visible");
+  function onMouseEnterSection(id) {
+    setHoveredElement(id);
   }
   function onMouseLeaveSection() {
-    setVisibilityRemoveButton("hidden");
+    setHoveredElement(null);
   }
 
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(educationList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setEducationList(items);
+  };
 
   return (
-    <div id="education" onMouseEnter={onMouseEnterEducation} onMouseLeave={onMouseLeaveEducation}>
+    <div
+      id="education"
+      onMouseEnter={onMouseEnterEducation}
+      onMouseLeave={onMouseLeaveEducation}
+    >
       <div>
         <h3 className="sectionTitle"> EDUCATION </h3>
-        <div className="informationContainer">
-          {educationList.map(({ id, key, education }) => (
-            <div key={key} id={key} className="section" onMouseEnter={onMouseEnterSection} onMouseLeave={onMouseLeaveSection}>
-               <button
-                type="button"
-                style={{visibility:`${visibilityRemoveButton}`}}
-                onClick={() => handleDelete(id)}
-                className="printVisibility deleteSectionButton"
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="educationList">
+            {(provided) => (
+              <div
+                className="informationContainer"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
               >
-                -
-              </button>
-              {education}
-            </div>
-          ))}
-        </div>
+                {educationList.map(({ id, key, education }, index) => (
+                  <Draggable key={key} draggableId={String(id)} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        id={id}
+                        className="section"
+                        onMouseEnter={() => onMouseEnterSection(id)}
+                        onMouseLeave={onMouseLeaveSection}
+                      >
+                        <button
+                          type="button"
+                          style={{
+                            visibility:
+                              hoveredElement === id ? "visible" : "hidden",
+                          }}
+                          onClick={() => handleDelete(id)}
+                          className="printVisibility deleteSectionButton"
+                        >
+                          -
+                        </button>
+                        {education}
+                        <div
+                          className="printVisibility"
+                          style={{
+                            cursor: "grab",
+                          }}
+                          {...provided.dragHandleProps}
+                        >
+                          ::
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
-      {showButton && (
-        <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
-          <Card>
-            <AddForm addNewInformation={(e) => addNewEducation(e)} />
-          </Card>
-        </BackdropLayout>
-      )}
+      <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
+        <Card>
+          <AddForm addNewInformation={(e) => addNewEducation(e)} />
+        </Card>
+      </BackdropLayout>
     </div>
   );
 }

@@ -33,12 +33,9 @@ export default function AddInformation({
   function changePlace(newPlaceAdd) {
     setNewPlace(newPlaceAdd);
   }
-
-  function changeBulletPoints(newBulletPointsAdd) {
+  function onChangeBulletPoints(newBulletPointsAdd) {
     setNewBulletPoints(newBulletPointsAdd);
   }
-
-  const [showButton, setShowButton] = useState(false);
 
   function onMouseEnter() {
     setVisibility("visible");
@@ -46,89 +43,88 @@ export default function AddInformation({
   function onMouseLeave() {
     setVisibility("hidden");
   }
-
   return (
-    <div
-      className="gridContainer"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <div className="add-InformationGrid">
-        <label htmlFor="name">
-          <input
-            className="input-Information nameSection"
-            type="text"
-            name="name"
-            value={newName}
-            style={{ width: (newName.length + 1) * 8 }}
-            onChange={(e) => {
-              changeWidthDinamically(e);
-              setNewName(e.target.value);
-            }}
-          />
-        </label>
-        <label htmlFor="date" style={{ justifySelf: "end" }}>
-          <input
-            className="input-Information cursiveText-Information rightSideInput-Information"
-            type="text"
-            name="date"
-            style={{ width: (newDate.length + 1) * 8 }}
-            value={newDate}
-            onChange={(e) => {
-              changeWidthDinamically(e);
-              setNewDate(e.target.value);
-            }}
-          />
-        </label>
-        <label htmlFor="information">
-          <input
-            className="input-Information cursiveText-Information"
-            type="text"
-            name="information"
-            style={{ width: (newInformation.length + 1) * 8 }}
-            value={newInformation}
-            onChange={(e) => {
-              changeWidthDinamically(e);
-              setNewInformation(e.target.value);
-            }}
-          />
-        </label>
-        <label htmlFor="place" style={{ justifySelf: "end" }}>
-          <input
-            className="input-Information rightSideInput-Information"
-            type="text"
-            name="place"
-            style={{ width: (newPlace.length + 1) * 8 }}
-            value={newPlace}
-            onChange={(e) => {
-              changeWidthDinamically(e);
-              setNewPlace(e.target.value);
-            }}
-          />
-        </label>
-        <BackdropLayout type="edit" buttonVisibility={visibility}>
-          {" "}
-          <Card>
-            <EditForm
-              name={newName}
-              changeName={(e) => changeName(e)}
-              date={newDate}
-              changeDate={(e) => changeDate(e)}
-              information={newInformation}
-              changeInformation={(e) => changeInformation(e)}
-              place={newPlace}
-              changePlace={(e) => changePlace(e)}
-              bulletPoints={newBulletPoints}
-              changeBulletPoints={(e) => changeBulletPoints(e)}
+    <>
+      <div
+        className="gridContainer"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        <div className="add-InformationGrid">
+          <label htmlFor="name">
+            <input
+              className="input-Information nameSection"
+              type="text"
+              name="name"
+              value={newName}
+              style={{ width: (newName.length + 1) * 8 }}
+              onChange={(e) => {
+                changeWidthDinamically(e);
+                setNewName(e.target.value);
+              }}
             />
-          </Card>
-        </BackdropLayout>
+          </label>
+          <label htmlFor="date" style={{ justifySelf: "end" }}>
+            <input
+              className="input-Information cursiveText-Information rightSideInput-Information"
+              type="text"
+              name="date"
+              style={{ width: (newDate.length + 1) * 8 }}
+              value={newDate}
+              onChange={(e) => {
+                changeWidthDinamically(e);
+                setNewDate(e.target.value);
+              }}
+            />
+          </label>
+          <label htmlFor="information">
+            <input
+              className="input-Information cursiveText-Information"
+              type="text"
+              name="information"
+              style={{ width: (newInformation.length + 1) * 8 }}
+              value={newInformation}
+              onChange={(e) => {
+                changeWidthDinamically(e);
+                setNewInformation(e.target.value);
+              }}
+            />
+          </label>
+          <label htmlFor="place" style={{ justifySelf: "end" }}>
+            <input
+              className="input-Information rightSideInput-Information"
+              type="text"
+              name="place"
+              style={{ width: (newPlace.length + 1) * 8 }}
+              value={newPlace}
+              onChange={(e) => {
+                changeWidthDinamically(e);
+                setNewPlace(e.target.value);
+              }}
+            />
+          </label>
+          <BackdropLayout type="edit" buttonVisibility={visibility}>
+            {" "}
+            <Card>
+              <EditForm
+                name={newName}
+                changeName={(e) => changeName(e)}
+                date={newDate}
+                changeDate={(e) => changeDate(e)}
+                information={newInformation}
+                changeInformation={(e) => changeInformation(e)}
+                place={newPlace}
+                changePlace={(e) => changePlace(e)}
+              />
+            </Card>
+          </BackdropLayout>
+        </div>
+        <BulletPoints
+          bulletPoints={newBulletPoints}
+          onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
+          visibility={visibility}
+        />
       </div>
-      <BulletPoints
-        bulletPoints={newBulletPoints}
-        onChange={(e) => changeBulletPoints(e)}
-        visibility={visibility}
-      />
-    </div>
+    </>
   );
 }

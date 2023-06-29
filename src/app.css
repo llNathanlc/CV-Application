@@ -6,43 +6,63 @@
 body {
   margin: 0;
   position: relative;
-  
 }
-html,body,input,button{
-  font-family: Roboto !important;
+html,
+body,
+input,
+button {
+  font-family: monospace;
+  letter-spacing: -1px;
 }
 #app {
   display: flex;
   justify-content: center;
-  background-color: rgb(166, 166, 166);
+  background-color: rgb(245, 245, 245);
   padding: 1rem;
+  cursor: default;
 }
 #page {
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 10px 0px black;
   width: 21cm;
-  height:29.7cm;
+  height: 29.7cm;
   background-color: white;
   padding: 2rem 4rem 2rem 4rem;
 }
 button {
   border: none;
-  background-color: rgb(174, 147, 147);
-  color:rgb(255, 255, 255);
+  background-color: rgb(164, 195, 253);
+  color: rgb(255, 255, 255);
   border-radius: 20px;
+  padding: 0 1rem 0 1rem;
 }
-button:hover{
-  cursor:pointer;
+button:hover {
+  cursor: pointer;
+  background-color: rgb(36, 103, 228);
 }
-::marker{
+::marker {
   font-size: 0.6rem;
-  color:rgb(69, 69, 69)
+  color: rgb(69, 69, 69);
+  cursor: pointer;
 }
-ul{
-  margin:0;
+ul {
+  margin: 0;
+}
+input:hover {
+  cursor: pointer;
+}
+input:focus {
+  cursor: text;
 }
 @media print {
+  html,
+  body,
+  input,
+  button {
+    font-family: Roboto;
+    letter-spacing: 0;
+  }
   body {
     visibility: hidden;
   }
@@ -58,10 +78,13 @@ ul{
     display: none;
     visibility: hidden !important;
   }
-  .section{
-    margin:0;
+  .section {
+    margin: 0;
   }
-  .informationContainer{
-    gap:1rem;
+  .sectionTitle {
+    margin-top: 16px;
+  }
+  .informationContainer {
+    gap: 1rem;
   }
 }

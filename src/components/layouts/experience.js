@@ -3,6 +3,7 @@ import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const bulletPoints = [
   {
@@ -78,9 +79,12 @@ const example = [
 let counter = 1;
 
 function Experience() {
-  const [showButton, setShowButton] = useState(true);
 
   const [experienceList, setExperienceList] = useState(example);
+
+  const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
+
+  const [hoveredElement, setHoveredElement] = useState(null);
 
   function handleDelete(id) {
     setExperienceList(experienceList.filter((ex) => ex.id !== id));
@@ -94,32 +98,94 @@ function Experience() {
     setExperienceList(newList);
   }
 
+  function onMouseEnterExperience() {
+    setVisibilityAddButton("visible");
+  }
+
+  function onMouseLeaveExperience() {
+    setVisibilityAddButton("hidden");
+  }
+
+  function onMouseEnterSection(id) {
+    setHoveredElement(id);
+  }
+  function onMouseLeaveSection() {
+    setHoveredElement(null);
+  }
+
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(experienceList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setExperienceList(items);
+  };
+
   return (
-    <div id="experience">
+    <div
+      id="experience"
+      onMouseEnter={onMouseEnterExperience}
+      onMouseLeave={onMouseLeaveExperience}
+    >
       <div>
         <h3 className="sectionTitle">EXPERIENCE</h3>
-        <div className="informationContainer" >
-          {experienceList.map(({ id, key, experience }) => (
-            <div key={key} id={key} className="section">
-               <button
-                type="button"
-                onClick={() => handleDelete(id)}
-                className="printVisibility deleteSectionButton"
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="experienceList">
+            {(provided) => (
+              <div
+                className="informationContainer"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
               >
-                -
-              </button>
-              {experience}
-            </div>
-          ))}
-        </div>
+                {experienceList.map(({ id, key, experience }, index) => (
+                  <Draggable key={key} draggableId={String(id)} index={index}>
+                    {(provided) => (
+                      <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      id={id}
+                      className="section"
+                      onMouseEnter={() => onMouseEnterSection(id)}
+                      onMouseLeave={onMouseLeaveSection}
+                    >
+                      <button
+                        type="button"
+                        style={{
+                          visibility:
+                            hoveredElement === id ? "visible" : "hidden",
+                        }}
+                        onClick={() => handleDelete(id)}
+                        className="printVisibility deleteSectionButton"
+                      >
+                        -
+                      </button>
+                      {experience}
+                      <div
+                        className="printVisibility"
+                        style={{
+                          cursor: "grab",
+                        }}
+                        {...provided.dragHandleProps}
+                      >
+                        ::
+                      </div>
+                    </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
-      {showButton && (
-        <BackdropLayout type="add">
-          <Card>
-            <AddForm addNewInformation={(e) => addNewExperience(e)} />
-          </Card>
-        </BackdropLayout>
-      )}
+      <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
+        <Card>
+          <AddForm addNewInformation={(e) => addNewExperience(e)} />
+        </Card>
+      </BackdropLayout>
     </div>
   );
 }

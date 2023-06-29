@@ -11,14 +11,23 @@ export default function AddSkill({ skill, skillText }) {
   const [newSkill, setNewSkill] = useState(skill);
   const [newSkillText, setNewSkillText] = useState(skillText);
 
+  const [visibility, setVisibility] = useState("hidden");
+
   function changeSkill(newSkillChange) {
     setNewSkill(newSkillChange);
   }
   function changeSkillText(newSkillTextChange) {
     setNewSkillText(newSkillTextChange);
   }
+
+  function onMouseEnter() {
+    setVisibility("visible");
+  }
+  function onMouseLeave() {
+    setVisibility("hidden");
+  }
   return (
-    <div>
+    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <label htmlFor="skill">
         <input
           className="input-Skill input-Black"
@@ -45,18 +54,16 @@ export default function AddSkill({ skill, skillText }) {
           }}
         />
       </label>
-      {showButton && (
-        <BackdropLayout type="edit">
-          <Card>
-            <EditSkillForm
-              skill={newSkill}
-              changeSkill={(e) => changeSkill(e)}
-              skillText={newSkillText}
-              changeSkillText={(e) => changeSkillText(e)}
-            />
-          </Card>
-        </BackdropLayout>
-      )}
+      <BackdropLayout type="edit" buttonVisibility={visibility}>
+        <Card>
+          <EditSkillForm
+            skill={newSkill}
+            changeSkill={(e) => changeSkill(e)}
+            skillText={newSkillText}
+            changeSkillText={(e) => changeSkillText(e)}
+          />
+        </Card>
+      </BackdropLayout>
     </div>
   );
 }

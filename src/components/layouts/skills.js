@@ -3,6 +3,7 @@ import BackdropLayout from "./backdropLayout";
 import AddSkill from "../display/addSkill";
 import Card from "../display/card";
 import AddSkillForm from "../inputs/addSkillForm";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const example = [
   {
@@ -37,16 +38,18 @@ const example = [
   },
   {
     id: 3,
-    key: "thirdExample",
+    key: "fourthExample",
     skill: <AddSkill skill="Libraries" skillText="pandas, NumPy, Matplotlib" />,
   },
 ];
 let counter = 3;
 
 export default function Skills() {
-  const [showButton, setShowButton] = useState(true);
-
   const [skillsList, setSkillsList] = useState(example);
+
+  const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
+
+  const [hoveredElement, setHoveredElement] = useState(null);
 
   function handleDelete(id) {
     setSkillsList(skillsList.filter((sk) => sk.id !== id));
@@ -59,32 +62,87 @@ export default function Skills() {
     ];
     setSkillsList(newList);
   }
+
+  function onMouseEnterSkills() {
+    setVisibilityAddButton("visible");
+  }
+
+  function onMouseLeaveSkills() {
+    setVisibilityAddButton("hidden");
+  }
+
+  function onMouseEnterSection(id) {
+    setHoveredElement(id);
+  }
+  function onMouseLeaveSection() {
+    setHoveredElement(null);
+  }
+
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(skillsList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setSkillsList(items);
+  };
+
   return (
-    <div id="skills">
+    <div
+      id="skills"
+      onMouseEnter={onMouseEnterSkills}
+      onMouseLeave={onMouseLeaveSkills}
+    >
       <div>
         <h3 className="sectionTitle">SKILLS</h3>
-        <div className="skillsContainer">
-          {skillsList.map(({ id, key, skill }) => (
-            <div key={key} id={key} className="section">
-              <button
-                type="button"
-                onClick={() => handleDelete(id)}
-                className="printVisibility deleteSectionButton"
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="projectList">
+            {(provided) => (
+              <div
+                className="skillsContainer"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
               >
-                -
-              </button>
-              {skill}
-            </div>
-          ))}
-        </div>
+                {skillsList.map(({ id, key, skill }, index) => (
+                  <Draggable key={key} draggableId={String(id)} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        id={id}
+                        className="section"
+                        onMouseEnter={() => onMouseEnterSection(id)}
+                        onMouseLeave={onMouseLeaveSection}
+                      >
+                        <button
+                          type="button"
+                          style={{
+                            visibility:
+                              hoveredElement === id ? "visible" : "hidden",
+                          }}
+                          onClick={() => handleDelete(id)}
+                          className="printVisibility deleteSectionButton"
+                        >
+                          -
+                        </button>
+                        {skill}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
-      {showButton && (
-        <BackdropLayout type="add">
-          <Card>
-            <AddSkillForm addNewSkill={(e) => addNewSkill(e)} />
-          </Card>
-        </BackdropLayout>
-      )}
+      <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
+        <Card>
+          <AddSkillForm addNewSkill={(e) => addNewSkill(e)} />
+        </Card>
+      </BackdropLayout>
     </div>
   );
 }

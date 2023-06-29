@@ -11,15 +11,13 @@ export default function EditForm({
   changeInformation,
   place,
   changePlace,
-  bulletPoints,
-  changeBulletPoints,
 }) {
   const [newName, setNewName] = useState(name);
   const [newDate, setNewDate] = useState(date);
   const [newInformation, setNewInformation] = useState(information);
   const [newPlace, setNewPlace] = useState(place);
 
-  const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
+
 
   function onSubmit(e) {
     e.preventDefault();
@@ -27,7 +25,6 @@ export default function EditForm({
     changeDate(newDate);
     changeInformation(newInformation);
     changePlace(newPlace);
-    changeBulletPoints(newBulletPoints);
   }
 
   return (
@@ -60,7 +57,7 @@ export default function EditForm({
           />
         </label>
         <label htmlFor="place">
-          Email:
+          Place:
           <input
             name="place"
             type="text"
@@ -68,7 +65,7 @@ export default function EditForm({
             onChange={(e) => setNewPlace(e.target.value)}
           />
         </label>
-        <BulletPoints  bulletPoints={newBulletPoints} onChange={(e) => changeBulletPoints(e)}/>
+        <BulletPoints  />
         <button type="submit" >change</button>
       </form>
   );

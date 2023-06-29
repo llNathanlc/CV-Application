@@ -3,7 +3,7 @@ import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
-
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 const bulletPoints = [
   {
     id: 0,
@@ -87,9 +87,12 @@ const example = [
 let counter = 1;
 
 function Projects() {
-  const [showButton, setShowButton] = useState(true);
 
   const [projectList, setProjectList] = useState(example);
+
+  const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
+
+  const [hoveredElement, setHoveredElement] = useState(null);
 
   function handleDelete(id) {
     setProjectList(projectList.filter((ex) => ex.id !== id));
@@ -102,33 +105,94 @@ function Projects() {
     ];
     setProjectList(newList);
   }
+  function onMouseEnterProjects() {
+    setVisibilityAddButton("visible");
+  }
+
+  function onMouseLeaveProjects() {
+    setVisibilityAddButton("hidden");
+  }
+
+  function onMouseEnterSection(id) {
+    setHoveredElement(id);
+  }
+  function onMouseLeaveSection() {
+    setHoveredElement(null);
+  }
+
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(projectList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setProjectList(items);
+  };
 
   return (
-    <div id="project">
+    <div
+      id="project"
+      onMouseEnter={onMouseEnterProjects}
+      onMouseLeave={onMouseLeaveProjects}
+    >
       <div>
         <h3 className="sectionTitle">PROJECTS</h3>
-        <div className="informationContainer">
-          {projectList.map(({ id, key, project }) => (
-            <div key={key} id={key} className="section">
-              <button
-                type="button"
-                onClick={() => handleDelete(id)}
-                className="printVisibility deleteSectionButton"
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="projectList">
+            {(provided) => (
+              <div
+                className="informationContainer"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
               >
-                -
-              </button>
-              {project}
-            </div>
-          ))}
-        </div>
+                {projectList.map(({ id, key, project }, index) => (
+                  <Draggable key={key} draggableId={String(id)} index={index}>
+                    {(provided) => (
+                      <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      id={id}
+                      className="section"
+                      onMouseEnter={() => onMouseEnterSection(id)}
+                      onMouseLeave={onMouseLeaveSection}
+                    >
+                      <button
+                        type="button"
+                        style={{
+                          visibility:
+                            hoveredElement === id ? "visible" : "hidden",
+                        }}
+                        onClick={() => handleDelete(id)}
+                        className="printVisibility deleteSectionButton"
+                      >
+                        -
+                      </button>
+                      {project}
+                      <div
+                        className="printVisibility"
+                        style={{
+                          cursor: "grab",
+                        }}
+                        {...provided.dragHandleProps}
+                      >
+                        ::
+                      </div>
+                    </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
-        {showButton && (
-          <BackdropLayout type="add">
-            <Card>
-              <AddForm addNewInformation={(e) => addNewProject(e)} />
-            </Card>
-          </BackdropLayout>
-        )}
+      <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
+        <Card>
+          <AddForm addNewInformation={(e) => addNewProject(e)} />
+        </Card>
+      </BackdropLayout>
     </div>
   );
 }
