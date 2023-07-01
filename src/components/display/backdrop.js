@@ -1,12 +1,12 @@
 import ReactDOM from "react-dom";
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import "./backdrop.css";
 
 export default function Backdrop({ onClose, children }) {
   const elemRef = useRef(document.createElement("div"));
   elemRef.current.classList.add("backdropContainer");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const elem = elemRef.current;
     document.body.appendChild(elem);
 

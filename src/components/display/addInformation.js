@@ -12,6 +12,7 @@ export default function AddInformation({
   information,
   place,
   bulletPoints,
+  bulletPointsCounter,
 }) {
   const [newName, setNewName] = useState(name);
   const [newDate, setNewDate] = useState(date);
@@ -19,7 +20,22 @@ export default function AddInformation({
   const [newPlace, setNewPlace] = useState(place);
   const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
 
+  const [newBulletPointsCounter, setNewBulletPointsCounter] =
+    useState(bulletPointsCounter);
+
   const [visibility, setVisibility] = useState("hidden");
+
+  let bullet = (
+    <BulletPoints
+      bulletPoints={newBulletPoints}
+      onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
+      visibility={visibility}
+      counter={newBulletPointsCounter}
+      onChangeBulletPointsCounter={(e) => onChangeBulletPointsCounter(e)}
+    />
+  );
+
+  const [newBullet, setNewBullet] = useState(bullet);
 
   function changeName(newNameAdd) {
     setNewName(newNameAdd);
@@ -36,6 +52,9 @@ export default function AddInformation({
   function onChangeBulletPoints(newBulletPointsAdd) {
     setNewBulletPoints(newBulletPointsAdd);
   }
+  function onChangeBulletPointsCounter(newBulletPointsCounterAdd) {
+    setNewBulletPointsCounter(newBulletPointsCounterAdd);
+  }
 
   function onMouseEnter() {
     setVisibility("visible");
@@ -49,6 +68,9 @@ export default function AddInformation({
         className="gridContainer"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onMouseDown={() => {
+          console.log(newBulletPoints);
+        }}
       >
         <div className="add-InformationGrid">
           <label htmlFor="name">
@@ -115,6 +137,12 @@ export default function AddInformation({
                 changeInformation={(e) => changeInformation(e)}
                 place={newPlace}
                 changePlace={(e) => changePlace(e)}
+                bulletPoints={newBulletPoints}
+                onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
+                bulletPointsCounter={newBulletPointsCounter}
+                onChangeBulletPointsCounter={(e) =>
+                  setNewBulletPointsCounter(e)
+                }
               />
             </Card>
           </BackdropLayout>
@@ -123,7 +151,10 @@ export default function AddInformation({
           bulletPoints={newBulletPoints}
           onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
           visibility={visibility}
+          counter={newBulletPointsCounter}
+          onChangeBulletPointsCounter={(e) => onChangeBulletPointsCounter(e)}
         />
+        {newBullet}
       </div>
     </>
   );

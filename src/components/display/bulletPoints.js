@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import changeWidthDinamically from "../utils/functions";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./bulletPoints.css";
 
-let count = 3;
-
 export default function BulletPoints({
   bulletPoints = [],
   onChangeBulletPoints,
+  onChangeBulletPointsCounter,
   visibility,
+  counter,
 }) {
   const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
 
+  const [newCounter, setNewCounter] = useState(counter);
+
   const [hoveredElement, setHoveredElement] = useState(null);
+
+  useEffect(() => {
+    onChangeBulletPoints(newBulletPoints);
+    onChangeBulletPointsCounter(newCounter);
+  }, [newBulletPoints, newCounter]);
 
   function handleDelete(id) {
     setNewBulletPoints(newBulletPoints.filter((bullet) => bullet.id !== id));
-    onChangeBulletPoints(newBulletPoints);
   }
   function updateBulletPoint(id, e) {
     setNewBulletPoints(
@@ -29,12 +35,12 @@ export default function BulletPoints({
     );
   }
   function handleAdd() {
-    count += 1;
+    setNewCounter(newCounter + 1);
+    console.log(newCounter);
     setNewBulletPoints([
       ...newBulletPoints,
-      { id: count, key: count, bulletPoint: "Bullet point" },
+      { id: newCounter, key: newCounter, bulletPoint: "Bullet point" },
     ]);
-    onChangeBulletPoints(newBulletPoints);
   }
 
   const handleOnDragEnd = (result) => {
@@ -57,19 +63,24 @@ export default function BulletPoints({
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="educationList">
+        <Droppable droppableId="bulletPointsList">
           {(provided) => (
-            <ul ref={provided.innerRef} {...provided.droppableProps}>
+            <ul
+              className="bulletPointsContainer"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
               {newBulletPoints.map(({ id, key, bulletPoint }, index) => (
                 <Draggable key={key} draggableId={String(id)} index={index}>
                   {(provided) => (
                     <li
-                      key={key}
+                      id={`bulletpoint ${id}`}
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                       onMouseEnter={() => onMouseEnter(id)}
                       onMouseLeave={onMouseLeave}
+                      className="bulletPoint"
                     >
                       <label htmlFor={id}>
                         <input
@@ -77,7 +88,6 @@ export default function BulletPoints({
                           className="inputBulletPoint"
                           style={{ width: `${bulletPoint.length * 7}px` }}
                           name={id}
-                          key={key}
                           value={bulletPoint}
                           onChange={(e) => {
                             changeWidthDinamically(e);

@@ -4,6 +4,9 @@ import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+
+let counter = 1;
+let bulletPointsCount = 4;
 const bulletPoints = [
   {
     id: 0,
@@ -66,6 +69,7 @@ const example = [
         information="Python, Flask, React, PostgreSQL, Docker"
         place=""
         bulletPoints={bulletPoints}
+        bulletPointsCounter={bulletPointsCount}
       />
     ),
   },
@@ -79,15 +83,13 @@ const example = [
         information="Spigot API, Java, Maven, TravicCI, Git"
         place=""
         bulletPoints={secondBulletPoints}
+        bulletPointsCounter={bulletPointsCount}
       />
     ),
   },
 ];
 
-let counter = 1;
-
 function Projects() {
-
   const [projectList, setProjectList] = useState(example);
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
@@ -150,35 +152,35 @@ function Projects() {
                   <Draggable key={key} draggableId={String(id)} index={index}>
                     {(provided) => (
                       <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      id={id}
-                      className="section"
-                      onMouseEnter={() => onMouseEnterSection(id)}
-                      onMouseLeave={onMouseLeaveSection}
-                    >
-                      <button
-                        type="button"
-                        style={{
-                          visibility:
-                            hoveredElement === id ? "visible" : "hidden",
-                        }}
-                        onClick={() => handleDelete(id)}
-                        className="printVisibility deleteSectionButton"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        id={id}
+                        className="section"
+                        onMouseEnter={() => onMouseEnterSection(id)}
+                        onMouseLeave={onMouseLeaveSection}
                       >
-                        -
-                      </button>
-                      {project}
-                      <div
-                        className="printVisibility"
-                        style={{
-                          cursor: "grab",
-                        }}
-                        {...provided.dragHandleProps}
-                      >
-                        ::
+                        <button
+                          type="button"
+                          style={{
+                            visibility:
+                              hoveredElement === id ? "visible" : "hidden",
+                          }}
+                          onClick={() => handleDelete(id)}
+                          className="printVisibility deleteSectionButton"
+                        >
+                          -
+                        </button>
+                        {project}
+                        <div
+                          className="printVisibility"
+                          style={{
+                            cursor: "grab",
+                          }}
+                          {...provided.dragHandleProps}
+                        >
+                          ::
+                        </div>
                       </div>
-                    </div>
                     )}
                   </Draggable>
                 ))}

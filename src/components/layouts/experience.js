@@ -5,6 +5,9 @@ import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
+let counter = 1;
+let bulletPointsCount = 3;
+
 const bulletPoints = [
   {
     id: 0,
@@ -58,6 +61,7 @@ const example = [
         information="Texas A&M University"
         place="College Station, TX"
         bulletPoints={bulletPoints}
+        bulletPointsCounter={bulletPointsCount}
       />
     ),
   },
@@ -71,15 +75,14 @@ const example = [
         information="Southwestern University"
         place="Georgetown, TX"
         bulletPoints={secondBulletPoints}
+        bulletPointsCounter={bulletPointsCount}
       />
     ),
   },
 ];
 
-let counter = 1;
 
 function Experience() {
-
   const [experienceList, setExperienceList] = useState(example);
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
@@ -143,35 +146,35 @@ function Experience() {
                   <Draggable key={key} draggableId={String(id)} index={index}>
                     {(provided) => (
                       <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      id={id}
-                      className="section"
-                      onMouseEnter={() => onMouseEnterSection(id)}
-                      onMouseLeave={onMouseLeaveSection}
-                    >
-                      <button
-                        type="button"
-                        style={{
-                          visibility:
-                            hoveredElement === id ? "visible" : "hidden",
-                        }}
-                        onClick={() => handleDelete(id)}
-                        className="printVisibility deleteSectionButton"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        id={id}
+                        className="section"
+                        onMouseEnter={() => onMouseEnterSection(id)}
+                        onMouseLeave={onMouseLeaveSection}
                       >
-                        -
-                      </button>
-                      {experience}
-                      <div
-                        className="printVisibility"
-                        style={{
-                          cursor: "grab",
-                        }}
-                        {...provided.dragHandleProps}
-                      >
-                        ::
+                        <button
+                          type="button"
+                          style={{
+                            visibility:
+                              hoveredElement === id ? "visible" : "hidden",
+                          }}
+                          onClick={() => handleDelete(id)}
+                          className="printVisibility deleteSectionButton"
+                        >
+                          -
+                        </button>
+                        {experience}
+                        <div
+                          className="printVisibility"
+                          style={{
+                            cursor: "grab",
+                          }}
+                          {...provided.dragHandleProps}
+                        >
+                          ::
+                        </div>
                       </div>
-                    </div>
                     )}
                   </Draggable>
                 ))}

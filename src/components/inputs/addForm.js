@@ -8,6 +8,7 @@ export default function AddForm({ addNewInformation }) {
   const [information, setInformation] = useState("");
   const [place, setPlace] = useState("");
   const [bulletPoints, setBulletPoints] = useState([]);
+  const [bulletPointsCounter, setBulletPointsCounter] = useState(0);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -19,6 +20,7 @@ export default function AddForm({ addNewInformation }) {
         information={information}
         place={place}
         bulletPoints={bulletPoints}
+        bulletPointsCounter={bulletPointsCounter}
       />
     );
   }
@@ -64,7 +66,11 @@ export default function AddForm({ addNewInformation }) {
           onChange={(e) => setPlace(e.target.value)}
         />
       </label>
-      <BulletPoints bulletPoints={bulletPoints} />
+      <BulletPoints
+        onChangeBulletPoints={(e) => setBulletPoints(e)}
+        counter={bulletPointsCounter}
+        onChangeBulletPointsCounter={(e) => setBulletPointsCounter(e)}
+      />
       <button type="submit" className="printVisibility">
         add
       </button>

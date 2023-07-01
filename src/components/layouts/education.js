@@ -5,6 +5,9 @@ import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
+let counter = 1;
+let bulletPointsCount = 0;
+
 const example = [
   {
     id: 0,
@@ -15,6 +18,7 @@ const example = [
         date="Aug. 2018 - May 2021"
         information="Bachelor of Arts in Computer Science, Minor in Business"
         place="Georgetown, TX"
+        bulletPointsCounter={bulletPointsCount}
       />
     ),
   },
@@ -27,12 +31,11 @@ const example = [
         date="Aug. 2014 - May 2018"
         information="Associate's in Liberal Arts"
         place="Bryan, TX"
+        bulletPointsCounter={bulletPointsCount}
       />
     ),
   },
 ];
-
-let counter = 1;
 
 export default function Education() {
   const [educationList, setEducationList] = useState(example);
