@@ -67,6 +67,7 @@ export default function AddForm({ addNewInformation }) {
         />
       </label>
       <BulletPoints
+        bulletPoints={bulletPoints}
         onChangeBulletPoints={(e) => setBulletPoints(e)}
         counter={bulletPointsCounter}
         onChangeBulletPointsCounter={(e) => setBulletPointsCounter(e)}

@@ -10,47 +10,42 @@ export default function BulletPoints({
   visibility,
   counter,
 }) {
-  const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
-
-  const [newCounter, setNewCounter] = useState(counter);
-
   const [hoveredElement, setHoveredElement] = useState(null);
 
-  useEffect(() => {
-    onChangeBulletPoints(newBulletPoints);
-    onChangeBulletPointsCounter(newCounter);
-  }, [newBulletPoints, newCounter]);
-
   function handleDelete(id) {
-    setNewBulletPoints(newBulletPoints.filter((bullet) => bullet.id !== id));
+    const newBulletPoint = bulletPoints.filter((bullet) => bullet.id !== id);
+
+    onChangeBulletPoints(newBulletPoint);
   }
   function updateBulletPoint(id, e) {
-    setNewBulletPoints(
-      newBulletPoints.map((bulletPoint) => {
-        if (bulletPoint.id === id) {
-          return { ...bulletPoint, bulletPoint: e.target.value };
-        }
-        return bulletPoint;
-      })
-    );
+    const updatedBulletPoints = bulletPoints.map((bulletPoint) => {
+      if (bulletPoint.id === id) {
+        return { ...bulletPoint, bulletPoint: e.target.value };
+      }
+      return bulletPoint;
+    });
+
+    onChangeBulletPoints(updatedBulletPoints);
   }
   function handleAdd() {
-    setNewCounter(newCounter + 1);
-    console.log(newCounter);
-    setNewBulletPoints([
-      ...newBulletPoints,
+    const newCounter = counter + 1;
+    const newBulletPoints = [
+      ...bulletPoints,
       { id: newCounter, key: newCounter, bulletPoint: "Bullet point" },
-    ]);
+    ];
+
+    onChangeBulletPointsCounter(newCounter);
+    onChangeBulletPoints(newBulletPoints);
   }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
-    const items = Array.from(newBulletPoints);
+    const items = Array.from(bulletPoints);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setNewBulletPoints(items);
+    onChangeBulletPoints(items);
   };
 
   function onMouseEnter(id) {
@@ -70,7 +65,7 @@ export default function BulletPoints({
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {newBulletPoints.map(({ id, key, bulletPoint }, index) => (
+              {bulletPoints.map(({ id, key, bulletPoint }, index) => (
                 <Draggable key={key} draggableId={String(id)} index={index}>
                   {(provided) => (
                     <li

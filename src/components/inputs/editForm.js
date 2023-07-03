@@ -30,7 +30,6 @@ export default function EditForm({
     changeDate(newDate);
     changeInformation(newInformation);
     changePlace(newPlace);
-    console.log(newBulletPoints);
     onChangeBulletPoints(newBulletPoints);
     onChangeBulletPointsCounter(newBulletPointsCounter);
   }
@@ -74,9 +73,10 @@ export default function EditForm({
         />
       </label>
       <BulletPoints
-        bulletPoints={bulletPoints}
-        onChangeBulletPoints={setNewBulletPoints}
-        counter={bulletPointsCounter}
+        bulletPoints={newBulletPoints}
+        onChangeBulletPoints={(e) => setNewBulletPoints(e)}
+        counter={newBulletPointsCounter}
+        visibility={"visible"}
         onChangeBulletPointsCounter={(e) => setNewBulletPointsCounter(e)}
       />
       <button type="submit">change</button>

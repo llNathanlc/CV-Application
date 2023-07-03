@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackdropLayout from "../layouts/backdropLayout";
 import Card from "./card";
 import EditForm from "../inputs/editForm";
@@ -24,18 +24,6 @@ export default function AddInformation({
     useState(bulletPointsCounter);
 
   const [visibility, setVisibility] = useState("hidden");
-
-  let bullet = (
-    <BulletPoints
-      bulletPoints={newBulletPoints}
-      onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
-      visibility={visibility}
-      counter={newBulletPointsCounter}
-      onChangeBulletPointsCounter={(e) => onChangeBulletPointsCounter(e)}
-    />
-  );
-
-  const [newBullet, setNewBullet] = useState(bullet);
 
   function changeName(newNameAdd) {
     setNewName(newNameAdd);
@@ -68,9 +56,6 @@ export default function AddInformation({
         className="gridContainer"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        onMouseDown={() => {
-          console.log(newBulletPoints);
-        }}
       >
         <div className="add-InformationGrid">
           <label htmlFor="name">
@@ -154,7 +139,6 @@ export default function AddInformation({
           counter={newBulletPointsCounter}
           onChangeBulletPointsCounter={(e) => onChangeBulletPointsCounter(e)}
         />
-        {newBullet}
       </div>
     </>
   );
