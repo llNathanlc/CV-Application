@@ -75,7 +75,7 @@ function Information() {
         <label htmlFor="tlfNumber">
           <input
             name="tlfNumber"
-            className="inputForm"
+            className="input-Information"
             type="text"
             value={tlfNumber}
             style={{ width: (tlfNumber.length + 1) * 7 }}
@@ -89,7 +89,7 @@ function Information() {
         <label htmlFor="email">
           <input
             name="email"
-            className="inputForm"
+            className="input-Information"
             type="text"
             value={email}
             style={{ width: (email.length + 1) * 7 }}
@@ -103,7 +103,7 @@ function Information() {
         <label htmlFor="linkedin">
           <input
             name="linkedin"
-            className="inputForm"
+            className="input-Information"
             type="text"
             value={linkedin}
             style={{ width: (linkedin.length + 1) * 7 }}
@@ -117,7 +117,7 @@ function Information() {
         <label htmlFor="github">
           <input
             name="github"
-            className="inputForm"
+            className="input-Information"
             type="text"
             value={github}
             style={{ width: (github.length + 1) * 7 }}

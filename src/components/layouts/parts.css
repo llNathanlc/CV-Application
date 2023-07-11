@@ -62,12 +62,7 @@
   justify-content: center;
   align-items: center;
 }
-.inputForm {
-  border: none;
-  text-align: center;
-  font-size: 14px;
-  color: grey;
-}
+
 .informationDiv {
   display: flex;
 }

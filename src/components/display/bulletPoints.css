@@ -1,5 +1,9 @@
-.inputBulletPoint{
-    border:none;
-    color:rgb(155, 155, 155);
-    font-size: 14px;
+.inputBulletPoint {
+  border: none;
+  color: rgb(155, 155, 155);
+  font-size: 14px;
+}
+
+.bulletPoint::before {
+  cursor: grab;
 }

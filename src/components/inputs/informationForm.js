@@ -28,55 +28,60 @@ export default function InformationForm({
   }
 
   return (
-    <div className="informationFormContainer">
-      <form onSubmit={onSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input
-            name="name"
-            type="text"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-          />
-        </label>
-        <label htmlFor="tlfNumber">
-          Telefon Number:
-          <input
-            name="tlfNumber"
-            type="text"
-            value={newTlfNumber}
-            onChange={(e) => setNewTlfNumber(e.target.value)}
-          />
-        </label>
-        <label htmlFor="email">
-          Email:
-          <input
-            name="email"
-            type="text"
-            value={newEmail}
-            onChange={(e) => setNewEmail(e.target.value)}
-          />
-        </label>
-        <label htmlFor="linkedin">
-          Linkedin:
-          <input
-            name="linkedin"
-            type="text"
-            value={newLinkedin}
-            onChange={(e) => setNewLinkedin(e.target.value)}
-          />
-        </label>
-        <label htmlFor="github">
-          Github:
-          <input
-            name="github"
-            type="text"
-            value={newGithub}
-            onChange={(e) => setNewGithub(e.target.value)}
-          />
-        </label>
-        <button type="submit">change</button>
-      </form>
-    </div>
+    <form onSubmit={onSubmit} className="informationFormContainer">
+      <label htmlFor="name" className="formRow">
+        <div className="labelForm">Name</div>
+        <input
+          name="name"
+          type="text"
+          value={newName}
+          className="inputForm"
+          onChange={(e) => setNewName(e.target.value)}
+        />
+      </label>
+      <label htmlFor="tlfNumber" className="formRow">
+        <div className="labelForm">Telefon Number</div>
+        <input
+          name="tlfNumber"
+          type="text"
+          value={newTlfNumber}
+          className="inputForm"
+          onChange={(e) => setNewTlfNumber(e.target.value)}
+        />
+      </label>
+      <label htmlFor="email" className="formRow">
+        <div className="labelForm">Email</div>
+        <input
+          name="email"
+          type="text"
+          value={newEmail}
+          className="inputForm"
+          onChange={(e) => setNewEmail(e.target.value)}
+        />
+      </label>
+      <label htmlFor="linkedin" className="formRow">
+        <div className="labelForm">Linkedin</div>
+        <input
+          name="linkedin"
+          type="text"
+          value={newLinkedin}
+          className="inputForm"
+          onChange={(e) => setNewLinkedin(e.target.value)}
+        />
+      </label>
+      <label htmlFor="github" className="formRow">
+        <div className="labelForm">Github</div>
+        <input
+          name="github"
+          type="text"
+          value={newGithub}
+          className="inputForm"
+          onChange={(e) => setNewGithub(e.target.value)}
+        />
+      </label>
+      <button type="submit" className="changeButton-InformationForm">
+        change
+      </button>
+    </form>
   );
 }

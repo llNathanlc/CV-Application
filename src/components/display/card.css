@@ -1,11 +1,11 @@
 .cardContainer{
     background-color: white;
     position:fixed;
-    height:60%;
     top:20%;
+    height: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding:1rem 1rem 0rem 1rem;
+    padding:2rem 2rem 2rem 2rem;
 }

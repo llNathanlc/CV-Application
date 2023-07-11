@@ -60,20 +60,16 @@ export default function BulletPoints({
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="bulletPointsList">
           {(provided) => (
-            <ul
-              className="bulletPointsContainer"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
+            <ul className="bulletPointsContainer" ref={provided.innerRef}>
               {bulletPoints.map(({ id, key, bulletPoint }, index) => (
                 <Draggable key={key} draggableId={String(id)} index={index}>
                   {(provided) => (
                     <li
                       id={`bulletpoint ${id}`}
                       ref={provided.innerRef}
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
                       onMouseEnter={() => onMouseEnter(id)}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
                       onMouseLeave={onMouseLeave}
                       className="bulletPoint"
                     >

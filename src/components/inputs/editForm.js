@@ -36,39 +36,43 @@ export default function EditForm({
 
   return (
     <form onSubmit={onSubmit} className="informationFormContainer">
-      <label htmlFor="name">
-        Name:
+      <label htmlFor="name" className="formRow">
+        <div className="labelForm">Name</div>
         <input
           name="name"
           type="text"
           value={newName}
+          className="inputForm"
           onChange={(e) => setNewName(e.target.value)}
         />
       </label>
-      <label htmlFor="date">
-        Date:
+      <label htmlFor="date" className="formRow">
+        <div className="labelForm">Date</div>
         <input
           name="date"
           type="text"
           value={newDate}
+          className="inputForm"
           onChange={(e) => setNewDate(e.target.value)}
         />
       </label>
-      <label htmlFor="information">
-        Information:
+      <label htmlFor="information" className="formRow">
+        <div className="labelForm">Information</div>
         <input
           name="information"
           type="text"
           value={newInformation}
+          className="inputForm"
           onChange={(e) => setNewInformation(e.target.value)}
         />
       </label>
-      <label htmlFor="place">
-        Place:
+      <label htmlFor="place" className="formRow">
+        <div className="labelForm">Place</div>
         <input
           name="place"
           type="text"
           value={newPlace}
+          className="inputForm"
           onChange={(e) => setNewPlace(e.target.value)}
         />
       </label>
@@ -79,7 +83,9 @@ export default function EditForm({
         visibility={"visible"}
         onChangeBulletPointsCounter={(e) => setNewBulletPointsCounter(e)}
       />
-      <button type="submit">change</button>
+      <button type="submit" className="changeButton-EditForm">
+        change
+      </button>
     </form>
   );
 }

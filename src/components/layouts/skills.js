@@ -128,6 +128,7 @@ export default function Skills() {
                           -
                         </button>
                         {skill}
+                        
                       </div>
                     )}
                   </Draggable>

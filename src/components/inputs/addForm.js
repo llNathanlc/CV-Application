@@ -3,10 +3,10 @@ import AddInformation from "../display/addInformation";
 import BulletPoints from "../display/bulletPoints";
 
 export default function AddForm({ addNewInformation }) {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
-  const [information, setInformation] = useState("");
-  const [place, setPlace] = useState("");
+  const [name, setName] = useState("Name");
+  const [date, setDate] = useState("Date");
+  const [information, setInformation] = useState("Information");
+  const [place, setPlace] = useState("Place");
   const [bulletPoints, setBulletPoints] = useState([]);
   const [bulletPointsCounter, setBulletPointsCounter] = useState(0);
 
@@ -25,43 +25,47 @@ export default function AddForm({ addNewInformation }) {
     );
   }
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor="name">
-        Name:
+    <form onSubmit={onSubmit} className="informationFormContainer">
+      <label htmlFor="name" className="formRow">
+        <div className="labelForm">Name</div>
         <input
           name="name"
           type="text"
           value={name}
+          className="inputForm"
           placeholder="name"
           onChange={(e) => setName(e.target.value)}
         />
       </label>
-      <label htmlFor="date">
-        Date:
+      <label htmlFor="date" className="formRow">
+        <div className="labelForm">Date</div>
         <input
           name="date"
           type="text"
           value={date}
+          className="inputForm"
           placeholder="date"
           onChange={(e) => setDate(e.target.value)}
         />
       </label>
-      <label htmlFor="information">
-        Information:
+      <label htmlFor="information" className="formRow">
+        <div className="labelForm">Information</div>
         <input
           name="information"
           type="text"
           value={information}
+          className="inputForm"
           placeholder="information"
           onChange={(e) => setInformation(e.target.value)}
         />
       </label>
-      <label htmlFor="place">
-        Place:
+      <label htmlFor="place" className="formRow">
+        <div className="labelForm">Place</div>
         <input
           name="place"
           type="text"
           value={place}
+          className="inputForm"
           placeholder="place"
           onChange={(e) => setPlace(e.target.value)}
         />

@@ -1,9 +1,24 @@
 /** InformationForm **/
 
-.informationFormContainer{
-    
+.informationFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.inputEditForm{
-    border:none;
-    text-align: center;
+.inputEditForm {
+  border: none;
+  text-align: center;
+}
+
+.changeButton-EditForm {
+  padding: 0.6rem 0 0.6rem 0;
+  font-size: x-large;
+  font-weight: bolder;
+  align-self: left;
+}
+
+.changeButton-InformationForm {
+  padding: 0.6rem 0 0.6rem 0;
+  font-size: x-large;
+  font-weight: bolder;
 }

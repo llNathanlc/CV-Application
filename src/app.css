@@ -41,13 +41,46 @@ button:hover {
   cursor: pointer;
   background-color: rgb(36, 103, 228);
 }
-::marker {
-  font-size: 0.6rem;
+::marker.hover {
   color: rgb(69, 69, 69);
-  cursor: pointer;
+  cursor: context-menu;
+}
+li {
+  list-style-type: none;
+  position: relative;
+}
+li::before {
+  content: "•";
+  font-size: 0.8rem;
+  position: absolute;
+  left: -1em;
+  cursor: grab;
 }
 ul {
   margin: 0;
+}
+.formRow{
+  display: flex;
+  flex-direction: column;
+  gap:2px;
+}
+.inputForm {
+  font-size: larger;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-bottom: rgb(117, 117, 117) solid 1px;
+}
+.inputForm:hover {
+  border-bottom: rgb(45, 129, 255) solid 1px;
+  outline: rgb(45, 129, 255) solid 1px;
+}
+.inputForm:focus {
+  border-bottom: rgb(4, 48, 109) solid 1px;
+  outline: rgb(4, 48, 109) solid 1px;
+}
+.labelForm {
+  font-size: larger;
+  color: rgb(0, 140, 255);
 }
 input:hover {
   cursor: pointer;
