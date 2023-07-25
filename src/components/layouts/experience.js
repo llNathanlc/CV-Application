@@ -81,8 +81,7 @@ const example = [
   },
 ];
 
-
-function Experience() {
+function Experience({ provided, children }) {
   const [experienceList, setExperienceList] = useState(example);
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
@@ -131,9 +130,25 @@ function Experience() {
       id="experience"
       onMouseEnter={onMouseEnterExperience}
       onMouseLeave={onMouseLeaveExperience}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
     >
       <div>
-        <h3 className="sectionTitle">EXPERIENCE</h3>
+        <div className="sectionTitle">
+          <div
+            className="grabber printVisibility"
+            {...provided.dragHandleProps}
+          >
+            ::
+          </div>
+          <input
+            type="text"
+            defaultValue="EXPERIENCE"
+            className="titleInput"
+          ></input>
+          {children}
+        </div>
+        <div className="borderBottomBlack"></div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="experienceList">
             {(provided) => (
@@ -160,7 +175,7 @@ function Experience() {
                               hoveredElement === id ? "visible" : "hidden",
                           }}
                           onClick={() => handleDelete(id)}
-                          className="printVisibility deleteSectionButton"
+                          className="printVisibility deleteInformationButton"
                         >
                           -
                         </button>

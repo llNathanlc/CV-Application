@@ -8,28 +8,32 @@ export default function AddSkillForm({ addNewSkill }) {
   function onSubmit(e) {
     e.preventDefault();
 
-    addNewSkill(<AddSkill skill={skill} skillText={skillText} />);
+    addNewSkill(skill, skillText);
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor="skill">
+    <form onSubmit={onSubmit} className="informationFormContainer">
+      <label htmlFor="skill" className="formRow">
+      <div className="labelForm">Title</div>
         <input
           name="skill"
+          className="inputForm"
           type="text"
           value={skill}
           onChange={(e) => setSkill(e.target.value)}
         />
       </label>
-      <label htmlFor="skillText">
+      <label htmlFor="skillText" className="formRow">
+      <div className="labelForm">Skills</div>
         <input
           name="skillText"
+          className="inputForm"
           type="text"
           value={skillText}
           onChange={(e) => setSkillText(e.target.value)}
         />
       </label>
-      <button type="submit" >change</button>
+      <button type="submit">Add</button>
     </form>
   );
 }

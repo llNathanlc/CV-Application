@@ -37,7 +37,7 @@ const example = [
   },
 ];
 
-export default function Education() {
+export default function Education({ provided, children }) {
   const [educationList, setEducationList] = useState(example);
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
@@ -84,9 +84,27 @@ export default function Education() {
       id="education"
       onMouseEnter={onMouseEnterEducation}
       onMouseLeave={onMouseLeaveEducation}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
     >
       <div>
-        <h3 className="sectionTitle"> EDUCATION </h3>
+        <div className="sectionTitle">
+          <div
+            className="grabber printVisibility"
+            {...provided.dragHandleProps}
+          >
+            ::
+          </div>
+          <input
+            type="text"
+            defaultValue="EDUCATION"
+            className="titleInput"
+          ></input>
+
+          {children}
+          
+        </div>
+        <div className="borderBottomBlack"></div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="educationList">
             {(provided) => (
@@ -113,7 +131,7 @@ export default function Education() {
                               hoveredElement === id ? "visible" : "hidden",
                           }}
                           onClick={() => handleDelete(id)}
-                          className="printVisibility deleteSectionButton"
+                          className="printVisibility deleteInformationButton"
                         >
                           -
                         </button>

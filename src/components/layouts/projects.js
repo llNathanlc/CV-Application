@@ -89,7 +89,7 @@ const example = [
   },
 ];
 
-function Projects() {
+function Projects({ provided, children }) {
   const [projectList, setProjectList] = useState(example);
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
@@ -137,9 +137,25 @@ function Projects() {
       id="project"
       onMouseEnter={onMouseEnterProjects}
       onMouseLeave={onMouseLeaveProjects}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
     >
       <div>
-        <h3 className="sectionTitle">PROJECTS</h3>
+        <div className="sectionTitle">
+          <div
+            className="grabber  printVisibility"
+            {...provided.dragHandleProps}
+          >
+            ::
+          </div>
+          <input
+            type="text"
+            defaultValue="PROJECTS"
+            className="titleInput"
+          ></input>
+          {children}
+        </div>
+        <div className="borderBottomBlack"></div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="projectList">
             {(provided) => (
@@ -166,7 +182,7 @@ function Projects() {
                               hoveredElement === id ? "visible" : "hidden",
                           }}
                           onClick={() => handleDelete(id)}
-                          className="printVisibility deleteSectionButton"
+                          className="printVisibility deleteInformationButton"
                         >
                           -
                         </button>

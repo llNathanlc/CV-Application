@@ -1,3 +1,121 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 @font-face {
   font-family: "Roboto";
   src: url("./resources/fonts/Roboto-Regular.ttf");
@@ -26,6 +144,8 @@ button {
   flex-direction: column;
   box-shadow: 0px 0px 10px 0px black;
   width: 21cm;
+  max-width: 21cm;
+  max-height: 29.7cm;
   height: 29.7cm;
   background-color: white;
   padding: 2rem 4rem 2rem 4rem;
@@ -59,10 +179,10 @@ li::before {
 ul {
   margin: 0;
 }
-.formRow{
+.formRow {
   display: flex;
   flex-direction: column;
-  gap:2px;
+  gap: 2px;
 }
 .inputForm {
   font-size: larger;

@@ -4,7 +4,7 @@ import Card from "../display/card";
 import InformationForm from "../inputs/informationForm";
 import changeWidthDinamically from "../utils/functions";
 
-function Information() {
+function Information({ provided }) {
   const [name, setName] = useState("Jake Ryan");
   const [tlfNumber, setTlfNumber] = useState("123 456 789");
   const [email, setEmail] = useState("jake@su.edu");
@@ -41,6 +41,9 @@ function Information() {
       id="Information"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
     >
       <label htmlFor="name">
         <input
@@ -75,7 +78,7 @@ function Information() {
         <label htmlFor="tlfNumber">
           <input
             name="tlfNumber"
-            className="input-Information"
+            className="input-Header"
             type="text"
             value={tlfNumber}
             style={{ width: (tlfNumber.length + 1) * 7 }}
@@ -89,7 +92,7 @@ function Information() {
         <label htmlFor="email">
           <input
             name="email"
-            className="input-Information"
+            className="input-Header"
             type="text"
             value={email}
             style={{ width: (email.length + 1) * 7 }}
@@ -103,7 +106,7 @@ function Information() {
         <label htmlFor="linkedin">
           <input
             name="linkedin"
-            className="input-Information"
+            className="input-Header"
             type="text"
             value={linkedin}
             style={{ width: (linkedin.length + 1) * 7 }}
@@ -117,7 +120,7 @@ function Information() {
         <label htmlFor="github">
           <input
             name="github"
-            className="input-Information"
+            className="input-Header"
             type="text"
             value={github}
             style={{ width: (github.length + 1) * 7 }}

@@ -1,15 +1,33 @@
 .sectionTitle {
+  display: flex;
   font-size: 16px;
   color: rgb(104, 104, 104);
-  border-bottom: solid 1px black;
   margin-top: 0;
+  gap: 1rem;
+  padding-bottom: 2px;
 }
-
+.titleInput {
+  border: none;
+  border-style: none;
+  font-size: 16px;
+  font-weight: bolder;
+  color: rgb(104, 104, 104);
+}
+.borderBottomBlack{
+  border-bottom: solid 1px black;
+}
 .informationContainer {
   display: flex;
   flex-direction: column;
 }
-
+.grabber {
+  margin-left: -2.2rem;
+  color: black;
+  font-weight: bolder;
+}
+.grabber:hover {
+  cursor: grab;
+}
 .editButton {
   position: absolute;
   justify-self: center;
@@ -22,10 +40,10 @@
 .addButton:hover {
   background-color: green;
 }
-.deleteSectionButton {
+.deleteInformationButton {
   align-self: flex-start;
 }
-.deleteSectionButton:hover {
+.deleteInformationButton:hover {
   background-color: red;
 }
 .removeBulletPointButton {
@@ -37,20 +55,40 @@
 .addBulletPointButton {
   align-self: flex-start;
 }
-.addBulletPointButton:hover{
+.addBulletPointButton:hover {
   background-color: green;
 }
-
+.addSectionButton {
+  position: absolute;
+  padding: 1rem 2rem 1rem 2rem;
+  font-size: 2rem;
+  margin-top: 4rem;
+}
+.deleteSectionButton {
+  align-self: center;
+}
+.deleteSectionButton:hover {
+  background-color: red;
+}
+.printButton {
+  font-weight: bolder;
+  font-size: 1.2rem;
+  width: max-content;
+  height: max-content;
+  padding: 1rem 2rem 1rem 2rem;
+ 
+}
 .section {
   display: flex;
   margin-left: -3.2rem;
-  margin-right:-1.2rem;
+  margin-right: -1.2rem;
   gap: 0.8rem;
 }
 #education,
 #experience,
 #project,
-#skills {
+#skills,
+.newSection {
   display: flex;
   flex-direction: column;
 }
@@ -73,9 +111,16 @@
   font-weight: bolder;
 }
 
+.input-Header {
+  text-align: center;
+  border: none;
+  color: rgb(155, 155, 155);
+  font-size: 14px;
+}
 /* Skills */
 .skillsContainer {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
+

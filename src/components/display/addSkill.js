@@ -5,7 +5,7 @@ import EditSkillForm from "../inputs/editSkillForm";
 import changeWidthDinamically from "../utils/functions";
 import "./addSkill.css";
 
-export default function AddSkill({ skill, skillText }) {
+export default function AddSkill({ skill, skillText, editButtonVisibility }) {
   const [showButton, setShowButton] = useState(true);
 
   const [newSkill, setNewSkill] = useState(skill);
@@ -54,7 +54,7 @@ export default function AddSkill({ skill, skillText }) {
           }}
         />
       </label>
-      <BackdropLayout type="edit" buttonVisibility={visibility}>
+      <BackdropLayout type="edit" buttonVisibility={editButtonVisibility}>
         <Card>
           <EditSkillForm
             skill={newSkill}

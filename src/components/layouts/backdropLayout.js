@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Backdrop from "../display/backdrop";
 
-export default function BackdropLayout({ children, type, buttonVisibility }) {
+export default function BackdropLayout({ children, type, buttonVisibility, addButtonClassName }) {
   const [showBackdrop, setShowBackdrop] = useState(false);
 
   function toggleBackdrop() {
@@ -26,7 +26,7 @@ export default function BackdropLayout({ children, type, buttonVisibility }) {
           type="button"
           onClick={toggleBackdrop}
           style={{ visibility: `${buttonVisibility}` }}
-          className="addButton printVisibility"
+          className={`${addButtonClassName} addButton printVisibility`}
         >
           +
         </button>
