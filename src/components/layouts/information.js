@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import InformationForm from "../inputs/informationForm";
@@ -13,6 +13,20 @@ function Information({ provided }) {
 
   const [visibility, setVisibility] = useState("hidden");
 
+  const [state, setState] = useState(
+    JSON.parse(localStorage.getItem("cvState-header")) || {
+      newName: name,
+      newTlfNumber: tlfNumber,
+      newEmail: email,
+      newLinkedin: linkedin,
+      newGithub: github,
+      visibility: "hidden",
+    }
+  );
+  useEffect(() => {
+    localStorage.setItem(`cvState-header`, JSON.stringify(state));
+  }, [state]);
+
   function onMouseEnter() {
     setVisibility("visible");
   }
@@ -22,18 +36,23 @@ function Information({ provided }) {
 
   function changeName(newName) {
     setName(newName);
+    setState((prevState) => ({ ...prevState, newName: newName }));
   }
   function changeTlfNumber(newNumber) {
     setTlfNumber(newNumber);
+    setState((prevState) => ({ ...prevState, newTlfNumber: newNumber }));
   }
   function changeEmail(newEmail) {
     setEmail(newEmail);
+    setState((prevState) => ({ ...prevState, newEmail: newEmail }));
   }
   function changeLinkedin(newLinkedin) {
     setLinkedin(newLinkedin);
+    setState((prevState) => ({ ...prevState, newLinkedin: newLinkedin }));
   }
   function changeGithub(newGithub) {
     setGithub(newGithub);
+    setState((prevState) => ({ ...prevState, newGithub: newGithub }));
   }
 
   return (
@@ -50,26 +69,26 @@ function Information({ provided }) {
           name="name"
           className="informationName"
           type="text"
-          value={name}
-          style={{ width: (name.length + 1) * 20 }}
+          value={state.newName}
+          style={{ width: (state.newName.length + 1) * 20 }}
           onChange={(e) => {
             changeWidthDinamically(e);
-            setName(e.target.value);
+            changeName(e.target.value);
           }}
         />
         <BackdropLayout type="edit" buttonVisibility={visibility}>
           <Card>
             <InformationForm
               changeName={(e) => changeName(e)}
-              name={name}
+              name={state.newName}
               changeTlfNumber={(e) => changeTlfNumber(e)}
-              tlfNumber={tlfNumber}
+              tlfNumber={state.newTlfNumber}
               changeEmail={(e) => changeEmail(e)}
-              email={email}
+              email={state.newEmail}
               changeLinkedin={(e) => changeLinkedin(e)}
-              linkedin={linkedin}
+              linkedin={state.newLinkedin}
               changeGithub={(e) => changeGithub(e)}
-              github={github}
+              github={state.newGithub}
             />
           </Card>
         </BackdropLayout>
@@ -80,11 +99,11 @@ function Information({ provided }) {
             name="tlfNumber"
             className="input-Header"
             type="text"
-            value={tlfNumber}
-            style={{ width: (tlfNumber.length + 1) * 7 }}
+            value={state.newTlfNumber}
+            style={{ width: (state.newTlfNumber.length + 1) * 7 }}
             onChange={(e) => {
               changeWidthDinamically(e);
-              setTlfNumber(e.target.value);
+              changeTlfNumber(e.target.value);
             }}
           />
         </label>
@@ -94,11 +113,11 @@ function Information({ provided }) {
             name="email"
             className="input-Header"
             type="text"
-            value={email}
-            style={{ width: (email.length + 1) * 7 }}
+            value={state.newEmail}
+            style={{ width: (state.newEmail.length + 1) * 7 }}
             onChange={(e) => {
               changeWidthDinamically(e);
-              setEmail(e.target.value);
+              changeEmail(e.target.value);
             }}
           />
         </label>
@@ -108,11 +127,11 @@ function Information({ provided }) {
             name="linkedin"
             className="input-Header"
             type="text"
-            value={linkedin}
-            style={{ width: (linkedin.length + 1) * 7 }}
+            value={state.newLinkedin}
+            style={{ width: (state.newLinkedin.length + 1) * 7 }}
             onChange={(e) => {
               changeWidthDinamically(e);
-              setLinkedin(e.target.value);
+              changeLinkedin(e.target.value);
             }}
           />
         </label>
@@ -122,11 +141,11 @@ function Information({ provided }) {
             name="github"
             className="input-Header"
             type="text"
-            value={github}
-            style={{ width: (github.length + 1) * 7 }}
+            value={state.newGithub}
+            style={{ width: (state.newGithub.length + 1) * 7 }}
             onChange={(e) => {
               changeWidthDinamically(e);
-              setGithub(e.target.value);
+              changeGithub(e.target.value);
             }}
           />
         </label>

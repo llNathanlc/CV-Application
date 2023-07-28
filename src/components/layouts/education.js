@@ -1,44 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { v4 as uuidv4 } from "uuid";
 
 let counter = 1;
 let bulletPointsCount = 0;
 
-const example = [
+const example2 = [
   {
-    id: 0,
-    key: "firstExample",
-    education: (
-      <AddInformation
-        name="Southwester University"
-        date="Aug. 2018 - May 2021"
-        information="Bachelor of Arts in Computer Science, Minor in Business"
-        place="Georgetown, TX"
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    id: uuidv4(),
+    name: "Southwester University",
+    date: "Aug. 2018 - May 2021",
+    information: "Bachelor of Arts in Computer Science, Minor in Business",
+    place: "Georgetown, TX",
+    bulletPointsCount: bulletPointsCount,
   },
   {
-    id: 1,
-    key: "secondExample",
-    education: (
-      <AddInformation
-        name="Blinn College"
-        date="Aug. 2014 - May 2018"
-        information="Associate's in Liberal Arts"
-        place="Bryan, TX"
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    id: uuidv4(),
+    name: "Blinn College",
+    date: "Aug. 2014 - May 2018",
+    information: "Associate's in Liberal Arts",
+    place: "Bryan, TX",
+    bulletPointsCount: bulletPointsCount,
   },
 ];
 
 export default function Education({ provided, children }) {
-  const [educationList, setEducationList] = useState(example);
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
@@ -48,10 +38,37 @@ export default function Education({ provided, children }) {
     setEducationList(educationList.filter((ed) => ed.id !== id));
   }
 
-  function addNewEducation(e) {
+  const [educationList, setEducationList] = useState(
+    JSON.parse(localStorage.getItem(`educationList-education`)) || example2
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      `educationList-education`,
+      JSON.stringify(educationList)
+    );
+  }, [educationList, counter]);
+
+  function addNewEducation(
+    id,
+    name,
+    date,
+    information,
+    place,
+    bulletPoints,
+    bulletPointsCount
+  ) {
     const newList = [
       ...educationList.slice(0),
-      { id: (counter += 1), key: (counter += 1), education: e },
+      {
+        id: id,
+        name: name,
+        date: date,
+        information: information,
+        place: place,
+        bulletPoints: bulletPoints,
+        bulletPointsCount: bulletPointsCount,
+      },
     ];
     setEducationList(newList);
   }
@@ -102,7 +119,6 @@ export default function Education({ provided, children }) {
           ></input>
 
           {children}
-          
         </div>
         <div className="borderBottomBlack"></div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -113,42 +129,54 @@ export default function Education({ provided, children }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {educationList.map(({ id, key, education }, index) => (
-                  <Draggable key={key} draggableId={String(id)} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        id={id}
-                        className="section"
-                        onMouseEnter={() => onMouseEnterSection(id)}
-                        onMouseLeave={onMouseLeaveSection}
-                      >
-                        <button
-                          type="button"
-                          style={{
-                            visibility:
-                              hoveredElement === id ? "visible" : "hidden",
-                          }}
-                          onClick={() => handleDelete(id)}
-                          className="printVisibility deleteInformationButton"
-                        >
-                          -
-                        </button>
-                        {education}
+                {educationList.map(
+                  (
+                    { id, name, date, information, place, bulletPointsCount },
+                    index
+                  ) => (
+                    <Draggable key={id} draggableId={String(id)} index={index}>
+                      {(provided) => (
                         <div
-                          className="printVisibility"
-                          style={{
-                            cursor: "grab",
-                          }}
-                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          id={id}
+                          className="section"
+                          onMouseEnter={() => onMouseEnterSection(id)}
+                          onMouseLeave={onMouseLeaveSection}
                         >
-                          ::
+                          <button
+                            type="button"
+                            style={{
+                              visibility:
+                                hoveredElement === id ? "visible" : "hidden",
+                            }}
+                            onClick={() => handleDelete(id)}
+                            className="printVisibility deleteInformationButton"
+                          >
+                            -
+                          </button>
+                          <AddInformation
+                            id={`educationExample${id}`}
+                            name={name}
+                            date={date}
+                            information={information}
+                            place={place}
+                            bulletPointsCounter={bulletPointsCount}
+                          />
+                          <div
+                            className="printVisibility"
+                            style={{
+                              cursor: "grab",
+                            }}
+                            {...provided.dragHandleProps}
+                          >
+                            ::
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                      )}
+                    </Draggable>
+                  )
+                )}
                 {provided.placeholder}
               </div>
             )}
@@ -157,7 +185,27 @@ export default function Education({ provided, children }) {
       </div>
       <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
         <Card>
-          <AddForm addNewInformation={(e) => addNewEducation(e)} />
+          <AddForm
+            addNewInformation={(
+              id,
+              name,
+              date,
+              information,
+              place,
+              bulletPoints,
+              bulletPointsCount
+            ) =>
+              addNewEducation(
+                id,
+                name,
+                date,
+                information,
+                place,
+                bulletPoints,
+                bulletPointsCount
+              )
+            }
+          />
         </Card>
       </BackdropLayout>
     </div>

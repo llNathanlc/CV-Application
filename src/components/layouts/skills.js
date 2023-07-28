@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackdropLayout from "./backdropLayout";
 import AddSkill from "../display/addSkill";
 import Card from "../display/card";
@@ -8,83 +8,32 @@ import { v4 as uuidv4 } from "uuid";
 
 const example = [
   {
-    id: 0,
-    key: "firstExample",
-    skill: (
-      <AddSkill
-        skill="Languages:"
-        skillText="Java, Python, C/C++, SQL(Postgres), Javascript, HTML/CSS,R"
-      />
-    ),
+    id: uuidv4(),
+    skill: "Languages:",
+    skillText: "Java, Python, C/C++, SQL(Postgres), Javascript, HTML/CSS,R",
   },
   {
-    id: 1,
-    key: "secondExample",
-    skill: (
-      <AddSkill
-        skill="Frameworks:"
-        skillText="React, Node.js, Flask, JUnit, WorkdPress, Material-UI, FastAPI"
-      />
-    ),
+    id: uuidv4(),
+    skill: "Frameworks:",
+    skillText: "React, Node.js, Flask, JUnit, WorkdPress, Material-UI, FastAPI",
   },
   {
-    id: 2,
-    key: "thirdExample",
-    skill: (
-      <AddSkill
-        skill="Developer Tools:"
-        skillText="Git, Docker, TravisCI, Google Cloud Platform, VS Code, Visual Studio, PyCharm, IntelliJ, Eclipse"
-      />
-    ),
+    id: uuidv4(),
+    skill: "Developer Tools:",
+    skillText:
+      "Git, Docker, TravisCI, Google Cloud Platform, VS Code, Visual Studio, PyCharm, IntelliJ, Eclipse",
   },
   {
-    id: 3,
-    key: "fourthExample",
-    skill: <AddSkill skill="Libraries" skillText="pandas, NumPy, Matplotlib" />,
+    id: uuidv4(),
+    skill: "Libraries",
+    skillText: "pandas, NumPy, Matplotlib",
   },
 ];
 
 export default function Skills({ provided, children }) {
-  const [skillsList, setSkillsList] = useState([
-    {
-      id: uuidv4(),
-      key: "firstExample",
-      component: AddSkill,
-      props: {
-        skill: "Languages:",
-        skillText: "Java, Python, C/C++, SQL(Postgres), Javascript, HTML/CSS,R",
-      },
-    },
-    {
-      id: uuidv4(),
-      key: "secondExample",
-      component: AddSkill,
-      props: {
-        skill: "Frameworks:",
-        skillText:
-          "React, Node.js, Flask, JUnit, WorkdPress, Material-UI, FastAPI",
-      },
-    },
-    {
-      id: uuidv4(),
-      key: "thirdExample",
-      component: AddSkill,
-      props: {
-        skill: "Developer Tools:",
-        skillText:
-          "Git, Docker, TravisCI, Google Cloud Platform, VS Code, Visual Studio, PyCharm, IntelliJ, Eclipse",
-      },
-    },
-    {
-      id: uuidv4(),
-      key: "fourthExample",
-      component: AddSkill,
-      props: {
-        skill: "Libraries",
-        skillText: "pandas, NumPy, Matplotlib",
-      },
-    },
-  ]);
+  const [skillsList, setSkillsList] = useState(
+    JSON.parse(localStorage.getItem(`skillsList-skills`)) || example
+  );
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
@@ -94,14 +43,17 @@ export default function Skills({ provided, children }) {
     setSkillsList(skillsList.filter((sk) => sk.id !== id));
   }
 
+  useEffect(() => {
+    localStorage.setItem(`skillsList-skills`, JSON.stringify(skillsList));
+  }, [skillsList]);
+
   function addNewSkill(skill, skillText) {
     const newList = [
       ...skillsList.slice(0),
       {
         id: uuidv4(),
-        key: uuidv4(),
-        component: AddSkill,
-        props: { skill: skill, skillText: skillText },
+        skill: skill,
+        skillText: skillText,
       },
     ];
     setSkillsList(newList);
@@ -164,41 +116,41 @@ export default function Skills({ provided, children }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {skillsList.map(
-                  ({ id, key, component: Component, props }, index) => (
-                    <Draggable key={key} draggableId={String(id)} index={index}>
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          id={id}
-                          className="section"
-                          onMouseEnter={() => onMouseEnterSection(id)}
-                          onMouseLeave={onMouseLeaveSection}
+                {skillsList.map(({ id, skill, skillText }, index) => (
+                  <Draggable key={id} draggableId={String(id)} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        id={id}
+                        className="section"
+                        onMouseEnter={() => onMouseEnterSection(id)}
+                        onMouseLeave={onMouseLeaveSection}
+                      >
+                        <button
+                          type="button"
+                          style={{
+                            visibility:
+                              hoveredElement === id ? "visible" : "hidden",
+                          }}
+                          onClick={() => handleDelete(id)}
+                          className="printVisibility deleteInformationButton"
                         >
-                          <button
-                            type="button"
-                            style={{
-                              visibility:
-                                hoveredElement === id ? "visible" : "hidden",
-                            }}
-                            onClick={() => handleDelete(id)}
-                            className="printVisibility deleteInformationButton"
-                          >
-                            -
-                          </button>
-                          <Component
-                            {...props}
-                            editButtonVisibility={
-                              hoveredElement === id ? "visible" : "hidden"
-                            }
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  )
-                )}
+                          -
+                        </button>
+                        <AddSkill
+                          id={`skillExample-${id}`}
+                          skill={skill}
+                          skillText={skillText}
+                          editButtonVisibility={
+                            hoveredElement === id ? "visible" : "hidden"
+                          }
+                        ></AddSkill>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
                 {provided.placeholder}
               </div>
             )}
@@ -208,7 +160,9 @@ export default function Skills({ provided, children }) {
       <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
         <Card>
           <AddSkillForm
-            addNewSkill={(skill, skillText) => addNewSkill(skill, skillText)}
+            addNewSkill={(id, skill, skillText) =>
+              addNewSkill(id, skill, skillText)
+            }
           />
         </Card>
       </BackdropLayout>

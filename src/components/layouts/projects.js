@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { v4 as uuidv4 } from "uuid";
 
 let counter = 1;
 let bulletPointsCount = 4;
@@ -60,37 +61,29 @@ const secondBulletPoints = [
 
 const example = [
   {
-    id: 0,
-    key: "firstExample",
-    project: (
-      <AddInformation
-        name="Giglytics"
-        date="June 2020 - Present"
-        information="Python, Flask, React, PostgreSQL, Docker"
-        place=""
-        bulletPoints={bulletPoints}
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    id: uuidv4(),
+    name: "Giglytics",
+    date: "June 2020 - Present",
+    information: "Python, Flask, React, PostgreSQL, Docker",
+    place: "",
+    bulletPoints: bulletPoints,
+    bulletPointsCounter: bulletPointsCount,
   },
   {
-    id: 1,
-    key: "secondExample",
-    project: (
-      <AddInformation
-        name="Simple Paintball"
-        date="May 2018 - May 2020"
-        information="Spigot API, Java, Maven, TravicCI, Git"
-        place=""
-        bulletPoints={secondBulletPoints}
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    id: uuidv4(),
+    name: "Simple Paintball",
+    date: "May 2018 - May 2020",
+    information: "Spigot API, Java, Maven, TravicCI, Git",
+    place: "",
+    bulletPoints: secondBulletPoints,
+    bulletPointsCounter: bulletPointsCount,
   },
 ];
 
 function Projects({ provided, children }) {
-  const [projectList, setProjectList] = useState(example);
+  const [projectList, setProjectList] = useState(
+    JSON.parse(localStorage.getItem(`projectList-project`)) || example
+  );
 
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
@@ -100,10 +93,30 @@ function Projects({ provided, children }) {
     setProjectList(projectList.filter((ex) => ex.id !== id));
   }
 
-  function addNewProject(e) {
+  useEffect(() => {
+    localStorage.setItem(`projectList-project`, JSON.stringify(projectList));
+  }, [projectList, counter]);
+
+  function addNewProject(
+    id,
+    name,
+    date,
+    information,
+    place,
+    bulletPoints,
+    bulletPointsCount
+  ) {
     const newList = [
       ...projectList.slice(0),
-      { id: (counter += 1), key: (counter += 1), project: e },
+      {
+        id: id,
+        name: name,
+        date: date,
+        information: information,
+        place: place,
+        bulletPoints: bulletPoints,
+        bulletPointsCount: bulletPointsCount,
+      },
     ];
     setProjectList(newList);
   }
@@ -164,42 +177,63 @@ function Projects({ provided, children }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {projectList.map(({ id, key, project }, index) => (
-                  <Draggable key={key} draggableId={String(id)} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        id={id}
-                        className="section"
-                        onMouseEnter={() => onMouseEnterSection(id)}
-                        onMouseLeave={onMouseLeaveSection}
-                      >
-                        <button
-                          type="button"
-                          style={{
-                            visibility:
-                              hoveredElement === id ? "visible" : "hidden",
-                          }}
-                          onClick={() => handleDelete(id)}
-                          className="printVisibility deleteInformationButton"
-                        >
-                          -
-                        </button>
-                        {project}
+                {projectList.map(
+                  (
+                    {
+                      id,
+                      name,
+                      date,
+                      information,
+                      place,
+                      bulletPoints,
+                      bulletPointsCount,
+                    },
+                    index
+                  ) => (
+                    <Draggable key={id} draggableId={String(id)} index={index}>
+                      {(provided) => (
                         <div
-                          className="printVisibility"
-                          style={{
-                            cursor: "grab",
-                          }}
-                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          id={id}
+                          className="section"
+                          onMouseEnter={() => onMouseEnterSection(id)}
+                          onMouseLeave={onMouseLeaveSection}
                         >
-                          ::
+                          <button
+                            type="button"
+                            style={{
+                              visibility:
+                                hoveredElement === id ? "visible" : "hidden",
+                            }}
+                            onClick={() => handleDelete(id)}
+                            className="printVisibility deleteInformationButton"
+                          >
+                            -
+                          </button>
+                          <AddInformation
+                            id={`projectExample${id}`}
+                            name={name}
+                            date={date}
+                            information={information}
+                            place={place}
+                            bulletPoints={bulletPoints}
+                            bulletPointsCounter={bulletPointsCount}
+                          />
+                          <div
+                            className="printVisibility"
+                            style={{
+                              cursor: "grab",
+                            }}
+                            {...provided.dragHandleProps}
+                          >
+                            ::
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                      )}
+                    </Draggable>
+                  )
+                )}
                 {provided.placeholder}
               </div>
             )}
@@ -208,7 +242,27 @@ function Projects({ provided, children }) {
       </div>
       <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
         <Card>
-          <AddForm addNewInformation={(e) => addNewProject(e)} />
+          <AddForm
+            addNewInformation={(
+              id,
+              name,
+              date,
+              information,
+              place,
+              bulletPoints,
+              bulletPointsCount
+            ) =>
+              addNewProject(
+                id,
+                name,
+                date,
+                information,
+                place,
+                bulletPoints,
+                bulletPointsCount
+              )
+            }
+          />
         </Card>
       </BackdropLayout>
     </div>

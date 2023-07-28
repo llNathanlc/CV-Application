@@ -7,6 +7,7 @@ import "./addInformation.css";
 import changeWidthDinamically from "../utils/functions";
 
 export default function AddInformation({
+  id,
   name,
   date,
   information,
@@ -20,27 +21,59 @@ export default function AddInformation({
   const [newPlace, setNewPlace] = useState(place);
   const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
 
+  const [state, setState] = useState(
+    JSON.parse(localStorage.getItem(`cvState-${id}`)) || {
+      newName: newName,
+      newDate: newDate,
+      newInformation: newInformation,
+      newPlace: newPlace,
+      newBulletPoints: newBulletPoints,
+      newBulletPointsCounter: newBulletPointsCounter,
+      visibility: "hidden",
+    }
+  );
+
+  // Save to local storage whenever state changes
+  useEffect(() => {
+    localStorage.setItem(`cvState-${id}`, JSON.stringify(state));
+  }, [state, id]);
+
   const [newBulletPointsCounter, setNewBulletPointsCounter] =
     useState(bulletPointsCounter);
 
   const [visibility, setVisibility] = useState("hidden");
 
   function changeName(newNameAdd) {
+    setState((prevState) => ({ ...prevState, newName: newNameAdd }));
     setNewName(newNameAdd);
   }
   function changeDate(newDateAdd) {
+    setState((prevState) => ({ ...prevState, newDate: newDateAdd }));
     setNewDate(newDateAdd);
   }
   function changeInformation(newInformationAdd) {
+    setState((prevState) => ({
+      ...prevState,
+      newInformation: newInformationAdd,
+    }));
     setNewInformation(newInformationAdd);
   }
   function changePlace(newPlaceAdd) {
+    setState((prevState) => ({ ...prevState, newPlace: newPlaceAdd }));
     setNewPlace(newPlaceAdd);
   }
   function onChangeBulletPoints(newBulletPointsAdd) {
+    setState((prevState) => ({
+      ...prevState,
+      newBulletPoints: newBulletPointsAdd,
+    }));
     setNewBulletPoints(newBulletPointsAdd);
   }
   function onChangeBulletPointsCounter(newBulletPointsCounterAdd) {
+    setState((prevState) => ({
+      ...prevState,
+      newBulletPointsCounter: newBulletPointsCounterAdd,
+    }));
     setNewBulletPointsCounter(newBulletPointsCounterAdd);
   }
 
@@ -63,11 +96,11 @@ export default function AddInformation({
               className="input-Information nameSection"
               type="text"
               name="name"
-              value={newName}
-              style={{ width: (newName.length + 1) * 8 }}
+              value={state.newName}
+              style={{ width: (state.newName.length + 1) * 8 }}
               onChange={(e) => {
                 changeWidthDinamically(e);
-                setNewName(e.target.value);
+                changeName(e.target.value);
               }}
             />
           </label>
@@ -76,11 +109,11 @@ export default function AddInformation({
               className="input-Information cursiveText-Information rightSideInput-Information"
               type="text"
               name="date"
-              style={{ width: (newDate.length + 1) * 8 }}
-              value={newDate}
+              style={{ width: (state.newDate.length + 1) * 8 }}
+              value={state.newDate}
               onChange={(e) => {
                 changeWidthDinamically(e);
-                setNewDate(e.target.value);
+                changeDate(e.target.value);
               }}
             />
           </label>
@@ -89,11 +122,11 @@ export default function AddInformation({
               className="input-Information cursiveText-Information"
               type="text"
               name="information"
-              style={{ width: (newInformation.length + 1) * 8 }}
-              value={newInformation}
+              style={{ width: (state.newInformation.length + 1) * 8 }}
+              value={state.newInformation}
               onChange={(e) => {
                 changeWidthDinamically(e);
-                setNewInformation(e.target.value);
+                changeInformation(e.target.value);
               }}
             />
           </label>
@@ -102,11 +135,11 @@ export default function AddInformation({
               className="input-Information rightSideInput-Information"
               type="text"
               name="place"
-              style={{ width: (newPlace.length + 1) * 8 }}
-              value={newPlace}
+              style={{ width: (state.newPlace.length + 1) * 8 }}
+              value={state.newPlace}
               onChange={(e) => {
                 changeWidthDinamically(e);
-                setNewPlace(e.target.value);
+                changePlace(e.target.value);
               }}
             />
           </label>
@@ -114,29 +147,29 @@ export default function AddInformation({
             {" "}
             <Card>
               <EditForm
-                name={newName}
+                name={state.newName}
                 changeName={(e) => changeName(e)}
-                date={newDate}
+                date={state.newDate}
                 changeDate={(e) => changeDate(e)}
-                information={newInformation}
+                information={state.newInformation}
                 changeInformation={(e) => changeInformation(e)}
-                place={newPlace}
+                place={state.newPlace}
                 changePlace={(e) => changePlace(e)}
-                bulletPoints={newBulletPoints}
+                bulletPoints={state.newBulletPoints}
                 onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
-                bulletPointsCounter={newBulletPointsCounter}
+                bulletPointsCounter={state.newBulletPointsCounter}
                 onChangeBulletPointsCounter={(e) =>
-                  setNewBulletPointsCounter(e)
+                  onChangeBulletPointsCounter(e)
                 }
               />
             </Card>
           </BackdropLayout>
         </div>
         <BulletPoints
-          bulletPoints={newBulletPoints}
+          bulletPoints={state.newBulletPoints}
           onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
           visibility={visibility}
-          counter={newBulletPointsCounter}
+          counter={state.newBulletPointsCounter}
           onChangeBulletPointsCounter={(e) => onChangeBulletPointsCounter(e)}
         />
       </div>

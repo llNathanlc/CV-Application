@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-
+import { v4 as uuidv4 } from "uuid";
 let counter = 1;
 let bulletPointsCount = 3;
 
@@ -52,38 +52,26 @@ const secondBulletPoints = [
 
 const example = [
   {
-    id: 0,
-    key: "firstExample",
-    experience: (
-      <AddInformation
-        name="Undergraduate Research Assistant"
-        date="June 2020 - Present"
-        information="Texas A&M University"
-        place="College Station, TX"
-        bulletPoints={bulletPoints}
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    id: uuidv4(),
+    name: "Undergraduate Research Assistant",
+    date: "June 2020 - Present",
+    information: "Texas A&M University",
+    place: "College Station, TX",
+    bulletPoints: bulletPoints,
+    bulletPointsCounter: bulletPointsCount,
   },
   {
-    id: 1,
-    key: "secondExample",
-    experience: (
-      <AddInformation
-        name="Information Technology Support Specialist"
-        date="Sep. 2018 - Present"
-        information="Southwestern University"
-        place="Georgetown, TX"
-        bulletPoints={secondBulletPoints}
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    id: uuidv4(),
+    name: "Information Technology Support Specialist",
+    date: "Sep. 2018 - Present",
+    information: "Southwestern University",
+    place: "Georgetown, TX",
+    bulletPoints: secondBulletPoints,
+    bulletPointsCounter: bulletPointsCount,
   },
 ];
 
 function Experience({ provided, children }) {
-  const [experienceList, setExperienceList] = useState(example);
-
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
   const [hoveredElement, setHoveredElement] = useState(null);
@@ -92,10 +80,37 @@ function Experience({ provided, children }) {
     setExperienceList(experienceList.filter((ex) => ex.id !== id));
   }
 
-  function addNewExperience(e) {
+  const [experienceList, setExperienceList] = useState(
+    JSON.parse(localStorage.getItem(`experienceList-experience`)) || example
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      `experienceList-experience`,
+      JSON.stringify(experienceList)
+    );
+  }, [experienceList, counter]);
+
+  function addNewExperience(
+    id,
+    name,
+    date,
+    information,
+    place,
+    bulletPoints,
+    bulletPointsCount
+  ) {
     const newList = [
       ...experienceList.slice(0),
-      { id: (counter += 1), key: (counter += 1), experience: e },
+      {
+        id: id,
+        name: name,
+        date: date,
+        information: information,
+        place: place,
+        bulletPoints: bulletPoints,
+        bulletPointsCount: bulletPointsCount,
+      },
     ];
     setExperienceList(newList);
   }
@@ -157,42 +172,63 @@ function Experience({ provided, children }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {experienceList.map(({ id, key, experience }, index) => (
-                  <Draggable key={key} draggableId={String(id)} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        id={id}
-                        className="section"
-                        onMouseEnter={() => onMouseEnterSection(id)}
-                        onMouseLeave={onMouseLeaveSection}
-                      >
-                        <button
-                          type="button"
-                          style={{
-                            visibility:
-                              hoveredElement === id ? "visible" : "hidden",
-                          }}
-                          onClick={() => handleDelete(id)}
-                          className="printVisibility deleteInformationButton"
-                        >
-                          -
-                        </button>
-                        {experience}
+                {experienceList.map(
+                  (
+                    {
+                      id,
+                      name,
+                      date,
+                      information,
+                      place,
+                      bulletPoints,
+                      bulletPointsCount,
+                    },
+                    index
+                  ) => (
+                    <Draggable key={id} draggableId={String(id)} index={index}>
+                      {(provided) => (
                         <div
-                          className="printVisibility"
-                          style={{
-                            cursor: "grab",
-                          }}
-                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          id={id}
+                          className="section"
+                          onMouseEnter={() => onMouseEnterSection(id)}
+                          onMouseLeave={onMouseLeaveSection}
                         >
-                          ::
+                          <button
+                            type="button"
+                            style={{
+                              visibility:
+                                hoveredElement === id ? "visible" : "hidden",
+                            }}
+                            onClick={() => handleDelete(id)}
+                            className="printVisibility deleteInformationButton"
+                          >
+                            -
+                          </button>
+                          <AddInformation
+                            id={`experienceExample${id}`}
+                            name={name}
+                            date={date}
+                            information={information}
+                            place={place}
+                            bulletPoints={bulletPoints}
+                            bulletPointsCounter={bulletPointsCount}
+                          />
+                          <div
+                            className="printVisibility"
+                            style={{
+                              cursor: "grab",
+                            }}
+                            {...provided.dragHandleProps}
+                          >
+                            ::
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                      )}
+                    </Draggable>
+                  )
+                )}
                 {provided.placeholder}
               </div>
             )}
@@ -201,7 +237,27 @@ function Experience({ provided, children }) {
       </div>
       <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
         <Card>
-          <AddForm addNewInformation={(e) => addNewExperience(e)} />
+          <AddForm
+            addNewInformation={(
+              id,
+              name,
+              date,
+              information,
+              place,
+              bulletPoints,
+              bulletPointsCount
+            ) =>
+              addNewExperience(
+                id,
+                name,
+                date,
+                information,
+                place,
+                bulletPoints,
+                bulletPointsCount
+              )
+            }
+          />
         </Card>
       </BackdropLayout>
     </div>

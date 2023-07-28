@@ -5,7 +5,7 @@ export default function A4Sheet({ children, addNewPage }) {
 
   useEffect(() => {
     if (node && checkOverflow(node)) {
-      addNewPage();
+      console.log("overflow")
     }
   }, [children, node]);
 

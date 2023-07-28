@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddInformation from "../display/addInformation";
 import BulletPoints from "../display/bulletPoints";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddForm({ addNewInformation }) {
   const [name, setName] = useState("Name");
@@ -14,14 +15,13 @@ export default function AddForm({ addNewInformation }) {
     e.preventDefault();
 
     addNewInformation(
-      <AddInformation
-        name={name}
-        date={date}
-        information={information}
-        place={place}
-        bulletPoints={bulletPoints}
-        bulletPointsCounter={bulletPointsCounter}
-      />
+      uuidv4(),
+      name,
+      date,
+      information,
+      place,
+      bulletPoints,
+      bulletPointsCounter
     );
   }
   return (

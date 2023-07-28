@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackdropLayout from "../layouts/backdropLayout";
 import Card from "./card";
 import EditSkillForm from "../inputs/editSkillForm";
 import changeWidthDinamically from "../utils/functions";
 import "./addSkill.css";
 
-export default function AddSkill({ skill, skillText, editButtonVisibility }) {
+export default function AddSkill({
+  id,
+  skill,
+  skillText,
+  editButtonVisibility,
+}) {
   const [showButton, setShowButton] = useState(true);
 
   const [newSkill, setNewSkill] = useState(skill);
@@ -13,11 +18,28 @@ export default function AddSkill({ skill, skillText, editButtonVisibility }) {
 
   const [visibility, setVisibility] = useState("hidden");
 
+  const [state, setState] = useState(
+    JSON.parse(localStorage.getItem(`cvState-${id}`)) || {
+      newSkill: newSkill,
+      newSkillText: newSkillText,
+      visibility: "hidden",
+    }
+  );
+
+  useEffect(() => {
+    localStorage.setItem(`cvState-${id}`, JSON.stringify(state));
+  }, [state, id]);
+
   function changeSkill(newSkillChange) {
     setNewSkill(newSkillChange);
+    setState((prevState) => ({ ...prevState, newSkill: newSkillChange }));
   }
   function changeSkillText(newSkillTextChange) {
     setNewSkillText(newSkillTextChange);
+    setState((prevState) => ({
+      ...prevState,
+      newSkillText: newSkillTextChange,
+    }));
   }
 
   function onMouseEnter() {
@@ -33,11 +55,11 @@ export default function AddSkill({ skill, skillText, editButtonVisibility }) {
           className="input-Skill input-Black"
           name="skill"
           type="text"
-          style={{ width: (newSkill.length + 1) * 6.7 }}
-          value={newSkill}
+          style={{ width: (state.newSkill.length + 1) * 6.7 }}
+          value={state.newSkill}
           onChange={(e) => {
             changeWidthDinamically(e);
-            setNewSkill(e.target.value);
+            changeSkill(e.target.value);
           }}
         />
       </label>
@@ -46,20 +68,20 @@ export default function AddSkill({ skill, skillText, editButtonVisibility }) {
           className="input-Skill"
           name="skillText"
           type="text"
-          style={{ width: (newSkillText.length + 1) * 6.6 }}
-          value={newSkillText}
+          style={{ width: (state.newSkillText.length + 1) * 6.6 }}
+          value={state.newSkillText}
           onChange={(e) => {
             changeWidthDinamically(e);
-            setNewSkillText(e.target.value);
+            changeSkillText(e.target.value);
           }}
         />
       </label>
       <BackdropLayout type="edit" buttonVisibility={editButtonVisibility}>
         <Card>
           <EditSkillForm
-            skill={newSkill}
+            skill={state.newSkill}
             changeSkill={(e) => changeSkill(e)}
-            skillText={newSkillText}
+            skillText={state.newSkillText}
             changeSkillText={(e) => changeSkillText(e)}
           />
         </Card>

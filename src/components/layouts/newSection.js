@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BackdropLayout from "./backdropLayout";
 import Card from "../display/card";
 import AddInformation from "../display/addInformation";
 import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-
+import { v4 as uuidv4 } from "uuid";
 let counter = 1;
 let bulletPointsCount = 2;
 
@@ -23,24 +23,18 @@ const bulletPoints = [
 
 const example = [
   {
-    id: 0,
+    id: uuidv4(),
     key: "firstExample",
-    newSection: (
-      <AddInformation
-        name="Name"
-        date="Date"
-        information="Information"
-        place="Place"
-        bulletPoints={bulletPoints}
-        bulletPointsCounter={bulletPointsCount}
-      />
-    ),
+    name: "Name",
+    date: "Date",
+    information: "Information",
+    place: "Place",
+    bulletPoints: bulletPoints,
+    bulletPointsCounter: bulletPointsCount,
   },
 ];
 
 function newSection({ provided, title, children }) {
-  const [newSectionList, setNewSectionList] = useState(example);
-
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
   const [hoveredElement, setHoveredElement] = useState(null);
@@ -49,10 +43,37 @@ function newSection({ provided, title, children }) {
     setNewSectionList(newSectionList.filter((ex) => ex.id !== id));
   }
 
-  function addNewSection(e) {
+  const [newSectionList, setNewSectionList] = useState(
+    JSON.parse(localStorage.getItem(`newSectionList-section`)) || example
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      `newSectionList-section`,
+      JSON.stringify(newSectionList)
+    );
+  }, [newSectionList, counter]);
+
+  function addNewSection(
+    id,
+    name,
+    date,
+    information,
+    place,
+    bulletPoints,
+    bulletPointsCount
+  ) {
     const newList = [
       ...newSectionList.slice(0),
-      { id: (counter += 1), key: (counter += 1), newSection: e },
+      {
+        id: id,
+        name: name,
+        date: date,
+        information: information,
+        place: place,
+        bulletPoints: bulletPoints,
+        bulletPointsCount: bulletPointsCount,
+      },
     ];
     setNewSectionList(newList);
   }
@@ -115,42 +136,63 @@ function newSection({ provided, title, children }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {newSectionList.map(({ id, key, newSection }, index) => (
-                  <Draggable key={key} draggableId={String(id)} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        id={id}
-                        className="section"
-                        onMouseEnter={() => onMouseEnterSection(id)}
-                        onMouseLeave={onMouseLeaveSection}
-                      >
-                        <button
-                          type="button"
-                          style={{
-                            visibility:
-                              hoveredElement === id ? "visible" : "hidden",
-                          }}
-                          onClick={() => handleDelete(id)}
-                          className="printVisibility deleteInformationButton"
-                        >
-                          -
-                        </button>
-                        {newSection}
+                {newSectionList.map(
+                  (
+                    {
+                      id,
+                      name,
+                      date,
+                      information,
+                      place,
+                      bulletPoints,
+                      bulletPointsCount,
+                    },
+                    index
+                  ) => (
+                    <Draggable key={id} draggableId={String(id)} index={index}>
+                      {(provided) => (
                         <div
-                          className="printVisibility"
-                          style={{
-                            cursor: "grab",
-                          }}
-                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          id={id}
+                          className="section"
+                          onMouseEnter={() => onMouseEnterSection(id)}
+                          onMouseLeave={onMouseLeaveSection}
                         >
-                          ::
+                          <button
+                            type="button"
+                            style={{
+                              visibility:
+                                hoveredElement === id ? "visible" : "hidden",
+                            }}
+                            onClick={() => handleDelete(id)}
+                            className="printVisibility deleteInformationButton"
+                          >
+                            -
+                          </button>
+                          <AddInformation
+                            id={`experienceExample${id}`}
+                            name={name}
+                            date={date}
+                            information={information}
+                            place={place}
+                            bulletPoints={bulletPoints}
+                            bulletPointsCounter={bulletPointsCount}
+                          />
+                          <div
+                            className="printVisibility"
+                            style={{
+                              cursor: "grab",
+                            }}
+                            {...provided.dragHandleProps}
+                          >
+                            ::
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                      )}
+                    </Draggable>
+                  )
+                )}
                 {provided.placeholder}
               </div>
             )}
@@ -159,7 +201,27 @@ function newSection({ provided, title, children }) {
       </div>
       <BackdropLayout type="add" buttonVisibility={visibilityAddButton}>
         <Card>
-          <AddForm addNewInformation={(e) => addNewSection(e)} />
+          <AddForm
+            addNewInformation={(
+              id,
+              name,
+              date,
+              information,
+              place,
+              bulletPoints,
+              bulletPointsCount
+            ) =>
+              addNewSection(
+                id,
+                name,
+                date,
+                information,
+                place,
+                bulletPoints,
+                bulletPointsCount
+              )
+            }
+          />
         </Card>
       </BackdropLayout>
     </div>

@@ -28,6 +28,8 @@ function App() {
   const [buttonVisibility, setButtonVisibility] = useState("hidden");
   const [hoveredElement, setHoveredElement] = useState(null);
 
+
+
   function addNewSection(e) {
     setPages((oldPages) => {
       const newPages = [...oldPages];
@@ -47,16 +49,14 @@ function App() {
       const newPages = [...oldPages];
 
       const contents = newPages[newPages.length - 1].splice(-1);
-      console.log(contents)
+      console.log(contents);
 
       // Add a new page with the contents
       newPages.push(contents);
-      console.log(newPages)
+      console.log(newPages);
       return newPages;
     });
-  };                                                
-
-  
+  };
 
   function handleDelete(id, pageIndex) {
     setPages((oldPages) => {
@@ -134,6 +134,15 @@ function App() {
         <button type="button" className="printVisibility printButton">
           Download as PDF
         </button>
+        <BackdropLayout
+          type="add"
+          addButtonClassName={"addSectionButton"}
+          buttonVisibility={"visible"}
+        >
+          <Card>
+            <AddSectionForm addNewSection={(e) => addNewSection(e)} />
+          </Card>
+        </BackdropLayout>
       </div>
       <div style={{ display: "flex", gap: "1rem" }}>
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -179,17 +188,6 @@ function App() {
                       </Draggable>
                     ))}
                     {provided.placeholder}
-                    <BackdropLayout
-                      type="add"
-                      addButtonClassName={"addSectionButton"}
-                      buttonVisibility={"visible"}
-                    >
-                      <Card>
-                        <AddSectionForm
-                          addNewSection={(e) => addNewSection(e)}
-                        />
-                      </Card>
-                    </BackdropLayout>
                   </div>
                 )}
               </Droppable>

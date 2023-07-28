@@ -9,11 +9,13 @@
 .titleInput {
   border: none;
   border-style: none;
+  appearance: none;
   font-size: 16px;
   font-weight: bolder;
   color: rgb(104, 104, 104);
 }
 .borderBottomBlack{
+  margin-bottom: 1rem;
   border-bottom: solid 1px black;
 }
 .informationContainer {
@@ -59,10 +61,12 @@
   background-color: green;
 }
 .addSectionButton {
-  position: absolute;
+ 
+  font-weight: bolder;
+  font-size: 1.2rem;
+  width: max-content;
+  height: max-content;
   padding: 1rem 2rem 1rem 2rem;
-  font-size: 2rem;
-  margin-top: 4rem;
 }
 .deleteSectionButton {
   align-self: center;
