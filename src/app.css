@@ -1,0 +1,247 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("./resources/fonts/Roboto-Regular.ttf");
+}
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  margin: 0;
+  position: relative;
+}
+html,
+body,
+input,
+button {
+  font-family: monospace;
+  letter-spacing: -1px;
+}
+#app {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(245, 245, 245);
+  padding: 1rem;
+  cursor: default;
+}
+#page {
+  display: flex;
+  flex-direction: column;
+
+  width: 210mm;
+  height: 297mm;
+  padding: 10mm;
+  margin: auto;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+button {
+  border: none;
+  background-color: rgb(164, 195, 253);
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 0 1rem 0 1rem;
+}
+button:hover {
+  cursor: pointer;
+  background-color: rgb(36, 103, 228);
+}
+::marker.hover {
+  color: rgb(69, 69, 69);
+  cursor: context-menu;
+}
+li {
+  list-style-type: none;
+  position: relative;
+}
+li::before {
+  content: "•";
+  font-size: 0.8rem;
+  position: absolute;
+  left: -1em;
+  cursor: grab;
+}
+ul {
+  margin: 0;
+}
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.inputForm {
+  font-size: larger;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-bottom: rgb(117, 117, 117) solid 1px;
+}
+.inputForm:hover {
+  border-bottom: rgb(45, 129, 255) solid 1px;
+  outline: rgb(45, 129, 255) solid 1px;
+}
+.inputForm:focus {
+  border-bottom: rgb(4, 48, 109) solid 1px;
+  outline: rgb(4, 48, 109) solid 1px;
+}
+.labelForm {
+  font-size: larger;
+  color: rgb(0, 140, 255);
+}
+input:hover {
+  cursor: pointer;
+}
+input:focus {
+  cursor: text;
+}
+@media print {
+  html,
+  body,
+  input,
+  button {
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 0;
+  }
+  html,
+  body {
+    visibility: hidden;
+  }
+  #page {
+    visibility: visible;
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+    box-shadow: none;
+  }
+  .printVisibility {
+    display: none;
+    visibility: hidden !important;
+  }
+  .section {
+    margin: 0;
+  }
+  .sectionTitle {
+    margin-top: 16px;
+  }
+  .informationContainer {
+    gap: 1rem;
+  }
+  .inputBulletPoint,.input-Skill,.nameSection,.input-Black,.input-Header,.titleInput{
+    font-size: 16px;
+  }
+}

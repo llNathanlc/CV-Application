@@ -1,0 +1,129 @@
+.sectionTitle {
+  display: flex;
+  margin-top: 0;
+  gap: 1rem;
+  padding-bottom: 2px;
+}
+.titleInput {
+  border: none;
+  border-style: none;
+  appearance: none;
+  font-size: 16px;
+  font-weight: bolder;
+  color: rgb(78, 78, 78);
+}
+.borderBottomBlack{
+  margin-bottom: 1rem;
+  border-bottom: solid 1px rgb(138, 138, 138);
+}
+.informationContainer {
+  display: flex;
+  flex-direction: column;
+}
+.grabber {
+  margin-left: -2.2rem;
+  color: black;
+  font-weight: bolder;
+}
+.grabber:hover {
+  cursor: grab;
+}
+.editButton {
+  position: absolute;
+  justify-self: center;
+  align-self: right;
+}
+.addButton {
+  align-self: center;
+  justify-self: center;
+}
+.addButton:hover {
+  background-color: green;
+}
+.deleteInformationButton {
+  align-self: flex-start;
+}
+.deleteInformationButton:hover {
+  background-color: red;
+}
+.removeBulletPointButton {
+  position: absolute;
+}
+.removeBulletPointButton:hover {
+  background-color: red;
+}
+.addBulletPointButton {
+  align-self: flex-start;
+}
+.addBulletPointButton:hover {
+  background-color: green;
+}
+.addSectionButton {
+ 
+  font-weight: bolder;
+  font-size: 1.2rem;
+  width: max-content;
+  height: max-content;
+  padding: 1rem 2rem 1rem 2rem;
+}
+.deleteSectionButton {
+  align-self: center;
+}
+.deleteSectionButton:hover {
+  background-color: red;
+}
+.printButton {
+  font-weight: bolder;
+  font-size: 1.2rem;
+  width: max-content;
+  height: max-content;
+  padding: 1rem 2rem 1rem 2rem;
+ 
+}
+.section {
+  display: flex;
+  margin-left: -3.2rem;
+  margin-right: -1.2rem;
+  gap: 0.8rem;
+}
+#education,
+#experience,
+#project,
+#skills,
+.newSection {
+  display: flex;
+  flex-direction: column;
+}
+/* Information */
+
+#Information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.informationDiv {
+  display: flex;
+}
+.informationName {
+  border: none;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.input-Header {
+  text-align: center;
+  border: none;
+  color: rgb(78, 78, 78);
+  font-size: 14px;
+}
+
+/* Skills */
+.skillsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
