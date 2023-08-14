@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import changeWidthDinamically from "../utils/functions";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { v4 as uuidv4 } from "uuid";
 import "./bulletPoints.css";
 
 export default function BulletPoints({
   bulletPoints = [],
   onChangeBulletPoints,
-  onChangeBulletPointsCounter,
   visibility,
-  counter,
 }) {
   const [hoveredElement, setHoveredElement] = useState(null);
 
@@ -28,13 +27,11 @@ export default function BulletPoints({
     onChangeBulletPoints(updatedBulletPoints);
   }
   function handleAdd() {
-    const newCounter = counter + 1;
     const newBulletPoints = [
       ...bulletPoints,
-      { id: newCounter, key: newCounter, bulletPoint: "Bullet point" },
+      { id: uuidv4(), key: uuidv4(), bulletPoint: "Bullet point" },
     ];
 
-    onChangeBulletPointsCounter(newCounter);
     onChangeBulletPoints(newBulletPoints);
   }
 

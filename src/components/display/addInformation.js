@@ -13,7 +13,6 @@ export default function AddInformation({
   information,
   place,
   bulletPoints,
-  bulletPointsCounter,
 }) {
   const [newName, setNewName] = useState(name);
   const [newDate, setNewDate] = useState(date);
@@ -28,7 +27,6 @@ export default function AddInformation({
       newInformation: newInformation,
       newPlace: newPlace,
       newBulletPoints: newBulletPoints,
-      newBulletPointsCounter: newBulletPointsCounter,
       visibility: "hidden",
     }
   );
@@ -38,8 +36,6 @@ export default function AddInformation({
     localStorage.setItem(`cvState-${id}`, JSON.stringify(state));
   }, [state, id]);
 
-  const [newBulletPointsCounter, setNewBulletPointsCounter] =
-    useState(bulletPointsCounter);
 
   const [visibility, setVisibility] = useState("hidden");
 
@@ -157,10 +153,6 @@ export default function AddInformation({
                 changePlace={(e) => changePlace(e)}
                 bulletPoints={state.newBulletPoints}
                 onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
-                bulletPointsCounter={state.newBulletPointsCounter}
-                onChangeBulletPointsCounter={(e) =>
-                  onChangeBulletPointsCounter(e)
-                }
               />
             </Card>
           </BackdropLayout>
@@ -169,8 +161,6 @@ export default function AddInformation({
           bulletPoints={state.newBulletPoints}
           onChangeBulletPoints={(e) => onChangeBulletPoints(e)}
           visibility={visibility}
-          counter={state.newBulletPointsCounter}
-          onChangeBulletPointsCounter={(e) => onChangeBulletPointsCounter(e)}
         />
       </div>
     </>

@@ -10,12 +10,12 @@ let bulletPointsCount = 2;
 
 const bulletPoints = [
   {
-    id: 0,
+    id: uuidv4(),
     key: "firstBulletPoint",
     bulletPoint: "bullet point",
   },
   {
-    id: 1,
+    id: uuidv4(),
     key: "secondBulletPoint",
     bulletPoint: "bullet point",
   },
@@ -30,7 +30,6 @@ const example = [
     information: "Information",
     place: "Place",
     bulletPoints: bulletPoints,
-    bulletPointsCounter: bulletPointsCount,
   },
 ];
 
@@ -54,15 +53,7 @@ function newSection({ provided, title, children }) {
     );
   }, [newSectionList, counter]);
 
-  function addNewSection(
-    id,
-    name,
-    date,
-    information,
-    place,
-    bulletPoints,
-    bulletPointsCount
-  ) {
+  function addNewSection(id, name, date, information, place, bulletPoints) {
     const newList = [
       ...newSectionList.slice(0),
       {
@@ -72,7 +63,6 @@ function newSection({ provided, title, children }) {
         information: information,
         place: place,
         bulletPoints: bulletPoints,
-        bulletPointsCount: bulletPointsCount,
       },
     ];
     setNewSectionList(newList);
@@ -138,15 +128,7 @@ function newSection({ provided, title, children }) {
               >
                 {newSectionList.map(
                   (
-                    {
-                      id,
-                      name,
-                      date,
-                      information,
-                      place,
-                      bulletPoints,
-                      bulletPointsCount,
-                    },
+                    { id, name, date, information, place, bulletPoints },
                     index
                   ) => (
                     <Draggable key={id} draggableId={String(id)} index={index}>
@@ -177,7 +159,6 @@ function newSection({ provided, title, children }) {
                             information={information}
                             place={place}
                             bulletPoints={bulletPoints}
-                            bulletPointsCounter={bulletPointsCount}
                           />
                           <div
                             className="printVisibility"
@@ -208,18 +189,9 @@ function newSection({ provided, title, children }) {
               date,
               information,
               place,
-              bulletPoints,
-              bulletPointsCount
+              bulletPoints
             ) =>
-              addNewSection(
-                id,
-                name,
-                date,
-                information,
-                place,
-                bulletPoints,
-                bulletPointsCount
-              )
+              addNewSection(id, name, date, information, place, bulletPoints)
             }
           />
         </Card>

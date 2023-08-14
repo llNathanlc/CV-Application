@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("./resources/fonts/Roboto-Regular.ttf");
+}
 html,
 body,
 div,
@@ -116,10 +120,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-@font-face {
-  font-family: "Roboto";
-  src: url("./resources/fonts/Roboto-Regular.ttf");
-}
 
 body {
   margin: 0;
@@ -145,14 +145,11 @@ button {
 
   width: 210mm;
   height: 297mm;
-  padding: 10mm; /* You might want to add inner padding for your content */
-  
-  margin: auto; /* Center the page on the screen */
+  padding: 10mm;
+  margin: auto;
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
-  
-  
 }
 button {
   border: none;
@@ -217,7 +214,7 @@ input:focus {
   body,
   input,
   button {
-    font-family: Roboto;
+    font-family: 'Times New Roman', Times, serif;
     letter-spacing: 0;
   }
   html,
@@ -243,5 +240,8 @@ input:focus {
   }
   .informationContainer {
     gap: 1rem;
+  }
+  .inputBulletPoint,.input-Skill,.nameSection,.input-Black,.input-Header,.titleInput{
+    font-size: 16px;
   }
 }

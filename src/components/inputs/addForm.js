@@ -9,20 +9,11 @@ export default function AddForm({ addNewInformation }) {
   const [information, setInformation] = useState("Information");
   const [place, setPlace] = useState("Place");
   const [bulletPoints, setBulletPoints] = useState([]);
-  const [bulletPointsCounter, setBulletPointsCounter] = useState(0);
 
   function onSubmit(e) {
     e.preventDefault();
 
-    addNewInformation(
-      uuidv4(),
-      name,
-      date,
-      information,
-      place,
-      bulletPoints,
-      bulletPointsCounter
-    );
+    addNewInformation(uuidv4(), name, date, information, place, bulletPoints);
   }
   return (
     <form onSubmit={onSubmit} className="informationFormContainer">
@@ -73,8 +64,6 @@ export default function AddForm({ addNewInformation }) {
       <BulletPoints
         bulletPoints={bulletPoints}
         onChangeBulletPoints={(e) => setBulletPoints(e)}
-        counter={bulletPointsCounter}
-        onChangeBulletPointsCounter={(e) => setBulletPointsCounter(e)}
       />
       <button type="submit" className="printVisibility">
         add

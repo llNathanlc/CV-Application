@@ -10,13 +10,13 @@
 }
 .input-Information{
     border:none;
-    color:rgb(155, 155, 155);
-    font-size: 14px;
+    color:rgb(78, 78, 78);
+    font-size: 15px;
 }
 .nameSection{   
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bolder;
-    color:rgb(81, 81, 81);
+    color:rgb(70, 70, 70);
 }
 .cursiveText-Information{
     font-style: italic;

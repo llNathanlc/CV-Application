@@ -7,7 +7,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { v4 as uuidv4 } from "uuid";
 
 let counter = 1;
-let bulletPointsCount = 0;
+let bulletPoints = [];
 
 const example2 = [
   {
@@ -16,7 +16,7 @@ const example2 = [
     date: "Aug. 2018 - May 2021",
     information: "Bachelor of Arts in Computer Science, Minor in Business",
     place: "Georgetown, TX",
-    bulletPointsCount: bulletPointsCount,
+    bulletPoints: bulletPoints,
   },
   {
     id: uuidv4(),
@@ -24,12 +24,10 @@ const example2 = [
     date: "Aug. 2014 - May 2018",
     information: "Associate's in Liberal Arts",
     place: "Bryan, TX",
-    bulletPointsCount: bulletPointsCount,
+    bulletPoints: bulletPoints,
   },
 ];
-
 export default function Education({ provided, children }) {
-
   const [visibilityAddButton, setVisibilityAddButton] = useState("hidden");
 
   const [hoveredElement, setHoveredElement] = useState(null);
@@ -56,7 +54,6 @@ export default function Education({ provided, children }) {
     information,
     place,
     bulletPoints,
-    bulletPointsCount
   ) {
     const newList = [
       ...educationList.slice(0),
@@ -67,7 +64,6 @@ export default function Education({ provided, children }) {
         information: information,
         place: place,
         bulletPoints: bulletPoints,
-        bulletPointsCount: bulletPointsCount,
       },
     ];
     setEducationList(newList);
@@ -131,7 +127,7 @@ export default function Education({ provided, children }) {
               >
                 {educationList.map(
                   (
-                    { id, name, date, information, place, bulletPointsCount },
+                    { id, name, date, information, place, bulletPoints },
                     index
                   ) => (
                     <Draggable key={id} draggableId={String(id)} index={index}>
@@ -161,7 +157,7 @@ export default function Education({ provided, children }) {
                             date={date}
                             information={information}
                             place={place}
-                            bulletPointsCounter={bulletPointsCount}
+                            bulletPoints={bulletPoints}
                           />
                           <div
                             className="printVisibility"
@@ -192,18 +188,9 @@ export default function Education({ provided, children }) {
               date,
               information,
               place,
-              bulletPoints,
-              bulletPointsCount
+              bulletPoints
             ) =>
-              addNewEducation(
-                id,
-                name,
-                date,
-                information,
-                place,
-                bulletPoints,
-                bulletPointsCount
-              )
+              addNewEducation(id, name, date, information, place, bulletPoints)
             }
           />
         </Card>

@@ -1,7 +1,5 @@
 .sectionTitle {
   display: flex;
-  font-size: 16px;
-  color: rgb(104, 104, 104);
   margin-top: 0;
   gap: 1rem;
   padding-bottom: 2px;
@@ -12,11 +10,11 @@
   appearance: none;
   font-size: 16px;
   font-weight: bolder;
-  color: rgb(104, 104, 104);
+  color: rgb(78, 78, 78);
 }
 .borderBottomBlack{
   margin-bottom: 1rem;
-  border-bottom: solid 1px black;
+  border-bottom: solid 1px rgb(138, 138, 138);
 }
 .informationContainer {
   display: flex;
@@ -118,9 +116,10 @@
 .input-Header {
   text-align: center;
   border: none;
-  color: rgb(155, 155, 155);
+  color: rgb(78, 78, 78);
   font-size: 14px;
 }
+
 /* Skills */
 .skillsContainer {
   display: flex;

@@ -6,23 +6,22 @@ import AddForm from "../inputs/addForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { v4 as uuidv4 } from "uuid";
 let counter = 1;
-let bulletPointsCount = 3;
 
 const bulletPoints = [
   {
-    id: 0,
+    id: uuidv4(),
     key: "firstBulletPoint",
     bulletPoint:
       "Developed a REST API using Fast API and PostgreSQL to store data from learning management systems",
   },
   {
-    id: 1,
+    id: uuidv4(),
     key: "secondBulletPoint",
     bulletPoint:
       "Developted a full-stack web application using Flask, React, PostgreSQL and Docker to analyze GitHub data",
   },
   {
-    id: 2,
+    id: uuidv4(),
     key: "thirdBulletPoint",
     bulletPoint:
       "Explored ways to visualize Github collaboration in a classroom setting",
@@ -31,19 +30,19 @@ const bulletPoints = [
 
 const secondBulletPoints = [
   {
-    id: 0,
+    id: uuidv4(),
     key: "firstBulletPoint",
     bulletPoint:
       "Communicate with managers to set up campus computers used on campus",
   },
   {
-    id: 1,
+    id: uuidv4(),
     key: "secondBulletPoint",
     bulletPoint:
       "Asses and troubleshoot computer problems brought by students, faculty and staff",
   },
   {
-    id: 2,
+    id: uuidv4(),
     key: "thirdBulletPoint",
     bulletPoint:
       "Maintain upkeep of computers, classroom equipment, and 200 printers across campus",
@@ -58,7 +57,6 @@ const example = [
     information: "Texas A&M University",
     place: "College Station, TX",
     bulletPoints: bulletPoints,
-    bulletPointsCounter: bulletPointsCount,
   },
   {
     id: uuidv4(),
@@ -67,7 +65,6 @@ const example = [
     information: "Southwestern University",
     place: "Georgetown, TX",
     bulletPoints: secondBulletPoints,
-    bulletPointsCounter: bulletPointsCount,
   },
 ];
 
@@ -98,7 +95,6 @@ function Experience({ provided, children }) {
     information,
     place,
     bulletPoints,
-    bulletPointsCount
   ) {
     const newList = [
       ...experienceList.slice(0),
@@ -109,7 +105,6 @@ function Experience({ provided, children }) {
         information: information,
         place: place,
         bulletPoints: bulletPoints,
-        bulletPointsCount: bulletPointsCount,
       },
     ];
     setExperienceList(newList);
@@ -181,7 +176,6 @@ function Experience({ provided, children }) {
                       information,
                       place,
                       bulletPoints,
-                      bulletPointsCount,
                     },
                     index
                   ) => (
@@ -213,7 +207,6 @@ function Experience({ provided, children }) {
                             information={information}
                             place={place}
                             bulletPoints={bulletPoints}
-                            bulletPointsCounter={bulletPointsCount}
                           />
                           <div
                             className="printVisibility"
@@ -245,7 +238,6 @@ function Experience({ provided, children }) {
               information,
               place,
               bulletPoints,
-              bulletPointsCount
             ) =>
               addNewExperience(
                 id,
@@ -254,7 +246,6 @@ function Experience({ provided, children }) {
                 information,
                 place,
                 bulletPoints,
-                bulletPointsCount
               )
             }
           />

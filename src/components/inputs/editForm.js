@@ -13,16 +13,12 @@ export default function EditForm({
   changePlace,
   bulletPoints,
   onChangeBulletPoints,
-  bulletPointsCounter,
-  onChangeBulletPointsCounter,
 }) {
   const [newName, setNewName] = useState(name);
   const [newDate, setNewDate] = useState(date);
   const [newInformation, setNewInformation] = useState(information);
   const [newPlace, setNewPlace] = useState(place);
   const [newBulletPoints, setNewBulletPoints] = useState(bulletPoints);
-  const [newBulletPointsCounter, setNewBulletPointsCounter] =
-    useState(bulletPointsCounter);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -31,7 +27,6 @@ export default function EditForm({
     changeInformation(newInformation);
     changePlace(newPlace);
     onChangeBulletPoints(newBulletPoints);
-    onChangeBulletPointsCounter(newBulletPointsCounter);
   }
 
   return (
@@ -79,9 +74,7 @@ export default function EditForm({
       <BulletPoints
         bulletPoints={newBulletPoints}
         onChangeBulletPoints={(e) => setNewBulletPoints(e)}
-        counter={newBulletPointsCounter}
         visibility={"visible"}
-        onChangeBulletPointsCounter={(e) => setNewBulletPointsCounter(e)}
       />
       <button type="submit" className="changeButton-EditForm">
         change

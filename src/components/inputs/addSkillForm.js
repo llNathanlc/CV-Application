@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddSkill from "../display/addSkill";
 
 export default function AddSkillForm({ addNewSkill }) {
   const [skill, setSkill] = useState("");
@@ -14,7 +13,7 @@ export default function AddSkillForm({ addNewSkill }) {
   return (
     <form onSubmit={onSubmit} className="informationFormContainer">
       <label htmlFor="skill" className="formRow">
-      <div className="labelForm">Title</div>
+        <div className="labelForm">Title</div>
         <input
           name="skill"
           className="inputForm"
@@ -24,7 +23,7 @@ export default function AddSkillForm({ addNewSkill }) {
         />
       </label>
       <label htmlFor="skillText" className="formRow">
-      <div className="labelForm">Skills</div>
+        <div className="labelForm">Skills</div>
         <input
           name="skillText"
           className="inputForm"

@@ -13,29 +13,62 @@ import "./components/layouts/parts.css";
 import "./app.css";
 import { v4 as uuidv4 } from "uuid";
 import A4Sheet from "./components/display/A4Sheet";
+import jsPDF from "jspdf";
+import domtoimage from "dom-to-image";
 
 function App() {
-  const [pages, setPages] = useState([
-    [
-      { id: uuidv4(), component: Information, props: {} },
-      { id: uuidv4(), component: Education, props: {} },
-      { id: uuidv4(), component: Experience, props: {} },
-      { id: uuidv4(), component: Projects, props: {} },
-      { id: uuidv4(), component: Skills, props: {} },
-    ],
-  ]);
-
+  const COMPONENT_MAP = {
+    Information: Information,
+    Education: Education,
+    Experience: Experience,
+    Projects: Projects,
+    Skills: Skills,
+    NewSection: NewSection,
+  };
   const [buttonVisibility, setButtonVisibility] = useState("hidden");
   const [hoveredElement, setHoveredElement] = useState(null);
 
+  const [pages, setPages] = useState(() => {
+    const savedPages = localStorage.getItem("pages");
+    if (savedPages) {
+      return JSON.parse(savedPages).map((page) => {
+        return page.map((item) => {
+          return {
+            ...item,
+            component: COMPONENT_MAP[item.componentName],
+          };
+        });
+      });
+    } else {
+      return [
+        [
+          { id: uuidv4(), componentName: "Information", props: {} },
+          { id: uuidv4(), componentName: "Education", props: {} },
+          { id: uuidv4(), componentName: "Experience", props: {} },
+          { id: uuidv4(), componentName: "Projects", props: {} },
+          { id: uuidv4(), componentName: "Skills", props: {} },
+        ],
+      ].map((page) => {
+        return page.map((item) => {
+          return {
+            ...item,
+            component: COMPONENT_MAP[item.componentName],
+          };
+        });
+      });
+    }
+  });
 
+  useEffect(() => {
+    localStorage.setItem("pages", JSON.stringify(pages));
+  }, [pages]);
 
   function addNewSection(e) {
     setPages((oldPages) => {
       const newPages = [...oldPages];
       const newSection = {
         id: uuidv4(),
-        component: NewSection,
+        componentName: "NewSection", // Store the name here
         props: { title: e },
       };
       const lastPageIndex = newPages.length - 1;
@@ -57,7 +90,6 @@ function App() {
       return newPages;
     });
   };
-
   function handleDelete(id, pageIndex) {
     setPages((oldPages) => {
       const newPages = [...oldPages];
@@ -68,7 +100,6 @@ function App() {
       return finalPages;
     });
   }
-
   function onMouseEnter() {
     setButtonVisibility("visible");
   }
@@ -83,10 +114,41 @@ function App() {
     setHoveredElement(null);
   }
 
+
   function printButton() {
     window.print();
   }
+  const generatePDF = () => {
+    const node = document.getElementById("page");
 
+    domtoimage
+      .toPng(node, {
+        height: node.offsetHeight * 2,
+        width: node.offsetWidth * 2,
+        style: {
+          transform: "scale(2)",
+          transformOrigin: "top left",
+          width: node.offsetWidth + "px",
+          height: node.offsetHeight + "px",
+        },
+      })
+      .then((dataUrl) => {
+        const img = new Image();
+        img.src = dataUrl;
+
+        img.onload = function () {
+          const pdf = new jsPDF("p", "mm", "a4");
+          const imgProps = pdf.getImageProperties(img);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+          pdf.addImage(img, "PNG", 0, 0, pdfWidth, pdfHeight);
+          pdf.save("download.pdf");
+        };
+      })
+      .catch((error) => {
+        console.error("oops, something went wrong!", error);
+      });
+  };
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -131,7 +193,11 @@ function App() {
         >
           Print
         </button>
-        <button type="button" className="printVisibility printButton">
+        <button
+          type="button"
+          className="printVisibility printButton"
+          onClick={generatePDF}
+        >
           Download as PDF
         </button>
         <BackdropLayout
@@ -157,7 +223,7 @@ function App() {
                     onMouseEnter={onMouseEnter}
                     onMouseLeave={onMouseLeave}
                   >
-                    {page.map(({ id, component: Component, props }, index) => (
+                    {page.map(({ id, componentName, props }, index) => (
                       <Draggable
                         key={id}
                         draggableId={String(id)}
@@ -168,7 +234,9 @@ function App() {
                             onMouseEnter={() => onMouseEnterSection(id)}
                             onMouseLeave={onMouseLeaveSection}
                           >
-                            <Component {...props} provided={provided}>
+                            {React.createElement(
+                              COMPONENT_MAP[componentName],
+                              { ...props, provided },
                               <button
                                 type="button"
                                 onClick={() => handleDelete(id, pageIndex)}
@@ -182,7 +250,7 @@ function App() {
                               >
                                 -
                               </button>
-                            </Component>
+                            )}
                           </div>
                         )}
                       </Draggable>
